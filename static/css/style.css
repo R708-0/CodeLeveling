@@ -1,3 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+.title{
+  font-family: 'Rajdhani','Orbitron', sans-serif;
+  font-size: 4rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: transparent;
+  /* color: #00ffff; */
+  /* text-shadow: 0 0 5px #00ffff, 0 0 15px #00ffff, 0 0 10px #002f2f; */
+  background: linear-gradient(90deg, #00ffff, #ff00ff, #00ffff);
+  -webkit-background-clip: text;
+}
 .container{
   display: flex;
   justify-content: center;
