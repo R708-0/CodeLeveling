@@ -48,3 +48,16 @@
 .button:hover {
   transform: translateY(-3px);
 }
+.mb-0{
+  font-family:'Rajdhani','Orbitron', sans-serif;
+  font-weight: bold;
+}
+.progress-bar{
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+.skill{
+  font-family: 'Rajdhani','Orbitron', sans-serif;
+  font-weight: bold;
+  color:#011f35;
+}

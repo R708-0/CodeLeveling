@@ -5,5 +5,53 @@
 {% endblock %}
 
 {% block body %}
-    aqui va el perfil
+    <div class="container mt-5">
+        <div class="card p-4 sahdow">
+            <div class="d-flex align-items-center">
+                <img src="/static/img/foto.png" alt="perfil" class="rounded-circle" height="100" width="100">
+                <div class="ms-4">
+                    <h3 class="mb-0">Diego Melgar Parada</h3>
+                    <p class="text-muted">Desarrollador de sistemas y aplicaciones, con la capacidad de mejorar ilimitadamente.</p>
+                </div>
+            </div>
+            <hr>
+            <h5 class="mt-3 text-center skill">Habilidades</h5>
+            <div class="mb-3">
+                <label class="skill">Python  Lvl:2</label>
+                <div class="progress">
+                    <div class="progress-bar bg-info" style="width: 80%">
+                        120/150 xp
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="skill">Sql  Lvl:1</label>
+                <div class="progress">
+                    <div class="progress-bar bg-info" style="width: 50%">
+                        50/100 xp
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="skill">JavaScript  Lvl:1</label>
+                <div class="progress">
+                    <div class="progress-bar bg-info" style="width: 20%">
+                        20/100 xp
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h5 class="mt-3 text-center skill">Tareas Completadas</h5>
+            <ul class="list-grup">
+                <li class="list-group-item">✅Completar curso Cs50 <span class="text-muted float-end">11/08/2025</span></li>
+                <li class="list-group-item">✅Desarrollar sistema de farmacia <span class="text-muted float-end">18/08/2025</span></li>
+                <li class="list-group-item">✅Trabajar como programador <span class="text-muted float-end">25/08/2025</span></li>
+            </ul>
+            <div class="mt-4 d-flex justify-content-end gap-2">
+                <button class="btn btn-outline-primary">Compartir Perfil</button>
+                <button class="btn btn-outline-primary">Editar Perfil</button>
+            </div>
+        </div>     
+    </div>
+   
 {% endblock %}
