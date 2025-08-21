@@ -11,13 +11,13 @@
   padding: 0 1rem;
   line-height: 1.2;
 }
-
-
 .container{
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+/* botones en barra de nav */
 .button-container {
   display: flex;
   background-color: rgba(245, 73, 144);
@@ -25,9 +25,9 @@
   height: 40px;
   align-items: center;
   justify-content: space-around;
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px,
-        rgba(245, 73, 144, 0.5) 5px 10px 15px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 5px,
+        rgba(245, 73, 144, 0.5) 3px 5px 5px;
 
 }
 .button {
@@ -48,6 +48,8 @@
 .button:hover {
   transform: translateY(-3px);
 }
+
+/* tarjetas */
 .mb-0{
   font-family:'Rajdhani','Orbitron', sans-serif;
   font-weight: bold;
@@ -60,4 +62,27 @@
   font-family: 'Rajdhani','Orbitron', sans-serif;
   font-weight: bold;
   color:#011f35;
+}
+
+/* personalizar tarjetas, botones */
+
+.card-p {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-p:hover{
+  transform: scale(1.001);
+  box-shadow: 0.3rem 0 0.5rem rgba(0, 0, 0, 0.2);
+}
+.animate-bar{
+  transition: width 1s ease-in-out;
+}
+.btn-p{
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-p:hover{
+  background-color:rgba(245, 73, 144);
+  border-color:rgba(245, 73, 144);
+  transform: scale(1.05);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 5px,
+        rgba(245, 73, 144, 0.5) 3px 5px 5px;
 }
