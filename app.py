@@ -13,6 +13,7 @@ def tareas():
 
 @app.route("/habilidades")
 def habilidades():
+    skills = db.execute
     return render_template("habilidades.html")
 
 
