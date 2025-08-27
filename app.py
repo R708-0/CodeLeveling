@@ -1,7 +1,13 @@
 import sqlite3
-from flask import Flask, render_template
+from flask import Flask, render_template, session
+from flask_session import Session
 
 app = Flask(__name__)
+
+
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 def get_skills():
     db = sqlite3.connect('leveling.db')
@@ -13,7 +19,7 @@ def get_skills():
 
     skills = []
     for row in rows:
-        percent = int(row["xp"] / row["xp_max"]) * 100
+        percent = int((row["xp"] / row["xp_max"]) * 100)
         skills.append(
             {
             'name': row["name"],
