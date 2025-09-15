@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    register CodeLeveeling
+{% endblock %}
+
+{% block body %}
+<form action="/register" method="POST">
+    <div class = "container mt-5">
+        <div class="card p-4 card-p">
+            <div class="mb-3 text-center">
+                <h3 class="skill">Registrar</h3>
+            </div>
+            <div class="mb-3">    
+                <input name="username" class="form-control mx-auto w-auto" placeholder="Nombre" autocomplete="off" autofocus type="text" />
+            </div>
+            <div class="mb-3">
+                <input name="password" class="form-control" placeholder="Contraseña" type="password" />
+            </div>
+            <div class="mb-3">
+                <input name="confirm" class="form-control" placeholder="Confirmar" Type="password" />
+            </div>
+            <button type="input" class="btn btn-primary btn-p">Registrar</button>
+        </div>
+    </div>
+</form>
+{% endblock %}
