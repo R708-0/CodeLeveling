@@ -1,8 +1,8 @@
 from flask import redirect, render_template, session
-from functools import warps
+from functools import wraps
 
 def login_required(f):
-    @warps(f)
+    @wraps(f)
     def decorated_function(*args, **kwargs):
         if session.get("user_id") ==  None:
             return redirect("/login")

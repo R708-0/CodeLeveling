@@ -1,5 +1,6 @@
 import sqlite3
 from flask import Flask, render_template, session, request, redirect
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask_session import Session
 
 from helpers import login_required
@@ -51,18 +52,23 @@ def get_skills():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirm = request.form.get("confirm")
         # NOTOFICACIONES (MEJORAR) 
-        if not request.form.get("username"):
+        if not username:
             return "DEBES INGRESAR UN USUARIO"
-        if not request.form.get("password"):
+        if not password:
             return "DEBES INGRESAR UNA CONTRASEÑA"
-        if not request.form.get("confirm") or request.form.get("confirm") != request.form.get("password"):
+        if confirm != password:
             return "DEBES CONFIRMAR LA CONTRASENA CORRECTAMENTE"
         
         # registrar en la base de datos
-        nombre = request.form.get("username")
-        cont = request.form.get("password")
-        execute_db("INSERT INTO users (name, hash, level) VALUES (?, ?, ?);", param=(nombre, cont, 1))
+        try:
+            password_hash = generate_password_hash(password)
+            execute_db("INSERT INTO users (name, hash) VALUES (?, ?);", param=(username, password_hash))
+        except Exception as e:
+            return "El usuario ya existe"
 
         return redirect("/login")
     
@@ -70,6 +76,9 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
+    session.clear()
+    
     if request.method == "POST":
         name = request.form.get("username")
         pas = request.form.get("password")
@@ -78,8 +87,16 @@ def login():
             return "Usuario invalido"
         if not pas:
             return "Contasena invalida"
+        
+        # consultar usuario a la base de datos
+        rows = execute_db("SELECT * FROM users WHERE name = ?;", param=(name,), result=True)
 
-        rows = execute_db("SELECT * FROM users WHERE username = ?;", name)
+        #comprobar que solo exista un usuario y comprobar hash
+        if len(rows) != 1:
+            return "usuario/contrasena invalidos"
+        
+        # guardar id del usuario en la sesion
+        session['user_id'] = rows[0]["id"]
 
         return redirect("/")
     
