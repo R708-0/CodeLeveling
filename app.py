@@ -66,7 +66,7 @@ def register():
         # registrar en la base de datos
         try:
             password_hash = generate_password_hash(password)
-            execute_db("INSERT INTO users (name, hash) VALUES (?, ?);", param=(username, password_hash))
+            execute_db("INSERT INTO users (username, hash) VALUES (?, ?);", param=(username, password_hash))
         except Exception as e:
             return "El usuario ya existe"
 
@@ -89,7 +89,7 @@ def login():
             return "Contasena invalida"
         
         # consultar usuario a la base de datos
-        rows = execute_db("SELECT * FROM users WHERE name = ?;", param=(name,), result=True)
+        rows = execute_db("SELECT * FROM users WHERE username = ?;", param=(name,), result=True)
 
         #comprobar que solo exista un usuario y comprobar hash
         if len(rows) != 1:
