@@ -84,15 +84,15 @@ def login():
         pas = request.form.get("password")
         # validacion de user y pass
         if not name:
-            return "Usuario invalido"
+            return "Ingrese un Usuario"
         if not pas:
-            return "Contasena invalida"
+            return "Ingrese  una Contrasena"
         
         # consultar usuario a la base de datos
         rows = execute_db("SELECT * FROM users WHERE username = ?;", param=(name,), result=True)
 
         #comprobar que solo exista un usuario y comprobar hash
-        if len(rows) != 1:
+        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], pas):
             return "usuario/contrasena invalidos"
         
         # guardar id del usuario en la sesion
@@ -102,6 +102,10 @@ def login():
     
     return render_template("login.html")
 
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
 
 @app.route("/")
 @login_required
@@ -110,10 +114,12 @@ def perfil():
     return render_template("perfil.html")
 
 @app.route("/tareas")
+@login_required
 def tareas():
     return render_template("tareas.html")
 
 @app.route("/habilidades")
+@login_required
 def habilidades():
     skills = get_skills()
     return render_template("habilidades.html", skills=skills)
