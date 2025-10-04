@@ -1,6 +1,8 @@
 import sqlite3
-from flask import Flask, render_template, session, request, redirect
+import os
+from flask import Flask, render_template, session, request, redirect, flash, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.utils import secure_filename
 from flask_session import Session
 
 from helpers import login_required
@@ -10,7 +12,14 @@ app = Flask(__name__)
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config["UPLOAD_FOLDER"] = "static/img"
+app.config["MAX_CONTENT_LENGHT"] = 2 * 1024 * 1024
+ALLOWED_EXTENSIONS = {"png","jpg","jpeg","gif"}
 Session(app)
+
+# verificar extenciones de archivo validos
+def allowed_files(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # bases de datos
 def execute_db(query, param=(),result = False):
@@ -52,6 +61,8 @@ def get_skills():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        photo = request.files["photo"]
+        name = request.form.get("name")
         username = request.form.get("username")
         password = request.form.get("password")
         confirm = request.form.get("confirm")
@@ -63,10 +74,17 @@ def register():
         if confirm != password:
             return "DEBES CONFIRMAR LA CONTRASENA CORRECTAMENTE"
         
+        # guardar foto en base de datos
+        photo_filename = None
+        if photo and allowed_files(photo.filename):
+            filename = secure_filename(photo.filename)
+            photo_filename = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+            photo.save(photo_filename)
+        
         # registrar en la base de datos
         try:
             password_hash = generate_password_hash(password)
-            execute_db("INSERT INTO users (username, hash) VALUES (?, ?);", param=(username, password_hash))
+            execute_db("INSERT INTO users (username, hash, name, photo) VALUES (?, ?, ?, ?);", param=(username, password_hash, name, photo_filename))
         except Exception as e:
             return "El usuario ya existe"
 
@@ -122,7 +140,9 @@ def tareas():
 @login_required
 def habilidades():
     skills = get_skills()
-    return render_template("habilidades.html", skills=skills)
+    user = execute_db("SELECT * FROM users WHERE id = ?", param=(session["user_id"],), result=True)
+    print(user)
+    return render_template("habilidades.html", skills=skills, user = user)
 
 if __name__ == "__main__":
     app.run(debug=True)

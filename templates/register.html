@@ -5,20 +5,21 @@
 {% endblock %}
 
 {% block body %}
-<form action="/register" method="POST">
+<form action="/register" method="POST" enctype="multipart/form-data">
     <div class = "container mt-5">
         <div class="card p-4 card-p">
             <div class="mb-3 text-center">
                 <h3 class="skill">Registrar</h3>
             </div>
-            <div class="mb-3">    
-                <input name="photo" class="form-control " placeholder="Foto" autocomplete="off"  type="file" />
+            <div class="mb-3">
+                <label>Fotografia para el perfil</label>    
+                <input name="photo" class="form-control " type="file" accept="image/*" />
             </div>
             <div class="mb-3">    
                 <input name="name" class="form-control " placeholder="Nombre completo" autocomplete="off" autofocus type="text" />
             </div>
             <div class="mb-3">    
-                <input name="username" class="form-control " placeholder="Nombre de usuario" autocomplete="off"  type="text" />
+                <input name="username" class="form-control " placeholder="Usuario" autocomplete="off"  type="text" />
             </div>
             <div class="mb-3">
                 <input name="password" class="form-control" placeholder="Contraseña" type="password" />
