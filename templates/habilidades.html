@@ -8,9 +8,13 @@ Code Leveling
 <div class="container mt-5">
     <div class="card p-4 card-p">
         <div class="d-flex align-items-center">
-            <img src="{{user.photo}}" alt="perfil" class="rounded-circle" height="100" width="100">
+            {% if user.photo %}
+                <img src="{{ url_for('static', filename='img/' ~ user.photo) }}" alt="Foto de perfil" class="rounded-circle" height="100" width="100">
+            {% else %}
+                <img src="/static/img/hacker.png" alt="Foto de perfil" class="rounded-circle" height="100" width="100">
+            {% endif %}
             <div class="ms-4">
-                <h3 class="mb-0"><i class="fas fa-user-circle me-2"></i>{{user["username"]}}</h3>
+                <h3 class="mb-0"><i class="fas fa-user-circle me-2"></i>{{user.name}}</h3>
                 <p class="text-muted">Desarrollador de sistemas y aplicaciones, con la capacidad de mejorar
                     ilimitadamente.</p>
             </div>

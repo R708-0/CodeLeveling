@@ -79,7 +79,9 @@ def register():
         if photo and allowed_files(photo.filename):
             filename = secure_filename(photo.filename)
             photo_filename = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-            photo.save(photo_filename)
+            photo_filename = filename
+        else:
+            photo_filename = "foto.png"
         
         # registrar en la base de datos
         try:
@@ -108,7 +110,6 @@ def login():
         
         # consultar usuario a la base de datos
         rows = execute_db("SELECT * FROM users WHERE username = ?;", param=(name,), result=True)
-
         #comprobar que solo exista un usuario y comprobar hash
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], pas):
             return "usuario/contrasena invalidos"
@@ -140,8 +141,8 @@ def tareas():
 @login_required
 def habilidades():
     skills = get_skills()
-    user = execute_db("SELECT * FROM users WHERE id = ?", param=(session["user_id"],), result=True)
-    print(user)
+    rows = execute_db("SELECT * FROM users WHERE id = ?", param=(session["user_id"],), result=True)
+    user = rows[0]
     return render_template("habilidades.html", skills=skills, user = user)
 
 if __name__ == "__main__":
