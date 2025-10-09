@@ -9,7 +9,7 @@ from helpers import login_required
 
 app = Flask(__name__)
 
-
+app.secret_key = "admin"
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["UPLOAD_FOLDER"] = "static/img"
@@ -62,7 +62,7 @@ def get_skills():
 def register():
     if request.method == "POST":
         photo = request.files["photo"]
-        name = request.form.get("name")
+        name = request.form.get("name").title()
         username = request.form.get("username")
         password = request.form.get("password")
         confirm = request.form.get("confirm")
@@ -80,8 +80,7 @@ def register():
             filename = secure_filename(photo.filename)
             photo_filename = os.path.join(app.config["UPLOAD_FOLDER"], filename)
             photo_filename = filename
-        else:
-            photo_filename = "foto.png"
+
         
         # registrar en la base de datos
         try:
@@ -104,8 +103,10 @@ def login():
         pas = request.form.get("password")
         # validacion de user y pass
         if not name:
-            return "Ingrese un Usuario"
+            flash("Ingrese un usuario valido")
+            return redirect("/login")
         if not pas:
+            flash("Ingrese una contrasena valida")
             return "Ingrese  una Contrasena"
         
         # consultar usuario a la base de datos
