@@ -66,13 +66,20 @@ def register():
         username = request.form.get("username")
         password = request.form.get("password")
         confirm = request.form.get("confirm")
-        # NOTOFICACIONES (MEJORAR) 
+        
+        # Validar inputs
+        if not name:
+            flash("Ingrese su Nombre Completo")
+            return render_template("register.html")
         if not username:
-            return "DEBES INGRESAR UN USUARIO"
+            flash("Debes Ingresar un Nombre Usuario")
+            return render_template("register.html")
         if not password:
-            return "DEBES INGRESAR UNA CONTRASEÑA"
+            flash("Debes Ingresar una Contraseña")
+            return render_template("register.html")
         if confirm != password:
-            return "DEBES CONFIRMAR LA CONTRASENA CORRECTAMENTE"
+            flash("La Contaseña y la Confirmación no Coinciden")
+            return render_template("register.html")
         
         # guardar foto en base de datos
         photo_filename = None
@@ -104,16 +111,17 @@ def login():
         # validacion de user y pass
         if not name:
             flash("Ingrese un usuario valido")
-            return redirect("/login")
+            return render_template("login.html")
         if not pas:
             flash("Ingrese una contrasena valida")
-            return "Ingrese  una Contrasena"
+            return render_template("login.html")
         
         # consultar usuario a la base de datos
         rows = execute_db("SELECT * FROM users WHERE username = ?;", param=(name,), result=True)
         #comprobar que solo exista un usuario y comprobar hash
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], pas):
-            return "usuario/contrasena invalidos"
+            flash("Usuario o contraseña inválidos")
+            return render_template("login.html")
         
         # guardar id del usuario en la sesion
         session['user_id'] = rows[0]["id"]

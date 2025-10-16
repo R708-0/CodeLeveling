@@ -1,34 +1,37 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Login CodeLeveling
+Login CodeLeveling
 {% endblock %}
 
 {% block body %}
+
+
 <form action="/login" method="POST">
-    <div class = "container mt-5">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+    <div class="container mt-5">
         <div class="card p-4 card-p">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-danger text-center">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
             <div class="mb-3 text-center">
                 <h3 class="skill">Ingresar</h3>
             </div>
-            <div class="mb-3">    
-                <input name="username" class="form-control mx-auto w-auto" placeholder="Nombre" autocomplete="off" autofocus type="text" />
+            <div class="mb-3">
+                <input name="username" class="form-control mx-auto w-auto" placeholder="Nombre" autocomplete="off"
+                    autofocus type="text" />
             </div>
             <div class="mb-3">
                 <input name="password" class="form-control" placeholder="Contraseña" type="password" />
             </div>
-            <button type="input" class="btn btn-primary btn-p">Ingresar</button>
+            <button type="submit" class="btn btn-primary btn-p">Ingresar</button>
         </div>
     </div>
 </form>
-    
+
 {% endblock %}
