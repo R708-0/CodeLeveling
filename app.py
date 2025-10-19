@@ -103,23 +103,27 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
 
-    session.clear()
+    if 'user_id' in session:
+        return redirect("/")
     
     if request.method == "POST":
-        name = request.form.get("username")
-        pas = request.form.get("password")
+        # Declarar variables
+        username = request.form.get("username")
+        password = request.form.get("password")
+
         # validacion de user y pass
-        if not name:
-            flash("Ingrese un usuario valido")
+        if not username:
+            flash("Ingrese un usuario válido")
             return render_template("login.html")
-        if not pas:
-            flash("Ingrese una contrasena valida")
+        if not password:
+            flash("Ingrese una contraseña válida")
             return render_template("login.html")
         
         # consultar usuario a la base de datos
-        rows = execute_db("SELECT * FROM users WHERE username = ?;", param=(name,), result=True)
-        #comprobar que solo exista un usuario y comprobar hash
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], pas):
+        rows = execute_db("SELECT * FROM users WHERE username = ?;", param=(username,), result=True)
+        
+        # comprobar que solo exista un usuario y comprobar hash
+        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], password):
             flash("Usuario o contraseña inválidos")
             return render_template("login.html")
         

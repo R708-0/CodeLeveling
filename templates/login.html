@@ -6,9 +6,8 @@ Login CodeLeveling
 
 {% block body %}
 
-
-<form action="/login" method="POST">
-    <div class="container mt-5">
+<div class="container mt-5">
+    <form action="/login" method="POST"> 
         <div class="card p-4 card-p">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
@@ -20,18 +19,18 @@ Login CodeLeveling
                 {% endif %}
             {% endwith %}
             <div class="mb-3 text-center">
-                <h3 class="skill">Ingresar</h3>
+                <h3 class="letter-1">Ingresar</h3>
             </div>
             <div class="mb-3">
-                <input name="username" class="form-control mx-auto w-auto" placeholder="Nombre" autocomplete="off"
+                <input name="username" class="form-control mx-auto w-auto" placeholder="Usuario" autocomplete="off"
                     autofocus type="text" />
             </div>
             <div class="mb-3">
-                <input name="password" class="form-control" placeholder="Contraseña" type="password" />
+                <input name="password" class="form-control mx-auto w-auto" placeholder="Contraseña" type="password" />
             </div>
             <button type="submit" class="btn btn-primary btn-p">Ingresar</button>
-        </div>
-    </div>
-</form>
+        </div> 
+    </form>
+</div>
 
 {% endblock %}
