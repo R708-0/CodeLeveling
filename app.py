@@ -13,7 +13,7 @@ app.secret_key = "admin"
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["UPLOAD_FOLDER"] = "static/img"
-app.config["MAX_CONTENT_LENGHT"] = 2 * 1024 * 1024
+app.config["MAX_CONTENT_LENGTH"] = 2 * 1024 * 1024
 ALLOWED_EXTENSIONS = {"png","jpg","jpeg","gif"}
 Session(app)
 
@@ -61,6 +61,7 @@ def get_skills():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        # declaracion de variables
         photo = request.files["photo"]
         name = request.form.get("name").title()
         username = request.form.get("username")
@@ -69,24 +70,27 @@ def register():
         
         # Validar inputs
         if not name:
-            flash("Ingrese su Nombre Completo")
+            flash("Ingrese su nombre completo")
             return render_template("register.html")
         if not username:
-            flash("Debes Ingresar un Nombre Usuario")
+            flash("Debes ingresar un nombre usuario")
             return render_template("register.html")
         if not password:
-            flash("Debes Ingresar una Contraseña")
+            flash("Debes ingresar una contraseña")
             return render_template("register.html")
         if confirm != password:
-            flash("La Contaseña y la Confirmación no Coinciden")
+            flash("La contraseña y la confirmación no coinciden")
             return render_template("register.html")
         
-        # guardar foto en base de datos
+        # guardar foto en base de datos y validar formato
         photo_filename = None
         if photo and allowed_files(photo.filename):
             filename = secure_filename(photo.filename)
-            photo_filename = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+            photo.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
             photo_filename = filename
+        else:
+            flash("Formato de imagen no permitido (png, jpg, jpeg, gif)")
+            return render_Template("register.html")
 
         
         # registrar en la base de datos
@@ -94,7 +98,8 @@ def register():
             password_hash = generate_password_hash(password)
             execute_db("INSERT INTO users (username, hash, name, photo) VALUES (?, ?, ?, ?);", param=(username, password_hash, name, photo_filename))
         except Exception as e:
-            return "El usuario ya existe"
+            flash("El nombre de usuario ya esta en uso")
+            return render_template("register.html")
 
         return redirect("/login")
     
