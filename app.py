@@ -64,7 +64,7 @@ def register():
         # declaracion de variables
         photo = request.files["photo"]
         name = request.form.get("name").title()
-        username = request.form.get("username")
+        username = request.form.get("username").lower()
         password = request.form.get("password")
         confirm = request.form.get("confirm")
         
@@ -84,21 +84,27 @@ def register():
         
         # guardar foto en base de datos y validar formato
         photo_filename = None
-        if photo and allowed_files(photo.filename):
+        if photo :
             filename = secure_filename(photo.filename)
             photo.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
             photo_filename = filename
-        else:
-            flash("Formato de imagen no permitido (png, jpg, jpeg, gif)")
-            return render_Template("register.html")
+        
+            if not allowed_files(photo.filename):
+                flash("Formato de imagen no permitido (png, jpg, jpeg, gif)")
+                return render_template("register.html")
 
+        # Verificar si el usuario ya existe      
+        existing = execute_db("SELECT * FROM users WHERE username = ?", param=(username,), result=True)
+        if existing:
+            flash("El nombre de usuario ya esta en uso")
+            return render_template("register.html")
         
         # registrar en la base de datos
         try:
             password_hash = generate_password_hash(password)
             execute_db("INSERT INTO users (username, hash, name, photo) VALUES (?, ?, ?, ?);", param=(username, password_hash, name, photo_filename))
         except Exception as e:
-            flash("El nombre de usuario ya esta en uso")
+            flash("Ocurrio un error al registrar :/ intentalo nuevamente")
             return render_template("register.html")
 
         return redirect("/login")
@@ -113,7 +119,7 @@ def login():
     
     if request.method == "POST":
         # Declarar variables
-        username = request.form.get("username")
+        username = request.form.get("username").lower()
         password = request.form.get("password")
 
         # validacion de user y pass

@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    register CodeLeveeling
+    register CodeLeveling
 {% endblock %}
 
 {% block body %}
 <form action="/register" method="POST" enctype="multipart/form-data">
     <div class = "container mt-5">
-        <div class="card p-4 card-p">
+        <div class="card p-4 card-p max-w-sm  max-auto">
             {% with messages = get_flashed_messages(with_categories = true) %}
                 {% if messages %}
                     {% for category, message in messages %}
@@ -21,7 +21,7 @@
                 <h3 class="letter-1">Registrar</h3>
             </div>
             <div class="mb-3 text-center">
-                <label for="photo" class="form-label mb-2 fw-bold" >Agregue una Fotografía para su Perfil</label>    
+                <label for="photo" class="form-label mb-2 fw-bold" >Agregue una Fotografía para su Perfil (Opcional)</label>    
                 <input name="photo" class="form-control " type="file" accept="image/*" />
             </div>
             <div class="mb-3">    
