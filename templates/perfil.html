@@ -1,9 +1,56 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Code Leveling
+Code Leveling
 {% endblock %}
 
 {% block body %}
-   aqui va el perfil
+<div class="container mt-5">
+    <div class="card p-4 card-p">
+        <div class="d-flex align-items-center">
+            {% if user.photo %}
+                <img src="{{ url_for('static', filename='img/' ~ user.photo) }}" alt="Foto de perfil" class="rounded-circle" height="100" width="100">
+            {% else %}
+                <img src="/static/img/hacker.png" alt="Foto de perfil" class="rounded-circle" height="100" width="100">
+            {% endif %}
+            <div class="ms-4">
+                <h3 class="mb-0"><i class="fas fa-user-circle me-2"></i>{{user.name}}</h3>
+                <p class="letter-1 mt-2">Titulo : Programador</p>
+                <p class="letter-1"> Rango : junior II </p>
+                <p class="letter-1"> Nivel : 7 </p>
+            </div>
+        </div>
+        <hr>
+        <h5 class="mt-3 text-center letter-1">Habilidades</h5>
+
+        {% for skill in skills %}
+        <div class="mb-3">
+            <label class="letter-1"><i class="{{skill.icon}} me-2"></i> {{skill.name}}: Nivel {{skill.level}}</label>
+            <div class="progress">
+                <div class="progress-bar {{skill.color}}" style="width: {{ skill.percent }}%;">
+                    {{skill.xp}} / {{skill.xp_max}}xp
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <hr>
+        <h5 class="mt-3 text-center letter-1">Tareas Completadas</h5>
+        <ul class="list-grup">
+            <li class="list-group-item"><i class="fa-solid fa-circle-check" style="color: #63E6BE;"></i></i>Completar
+                curso Cs50 <span class="text-muted float-end"><i class="far fa-calendar-alt me-1"></i>11/08/2025</span>
+            </li>
+            <li class="list-group-item"><i class="fa-solid fa-circle-check" style="color: #63E6BE;"></i></i>Desarrollar
+                sistema de farmacia <span class="text-muted float-end"><i
+                        class="far fa-calendar-alt me-1"></i>18/08/2025</span></li>
+            <li class="list-group-item"><i class="fa-solid fa-circle-check" style="color: #63E6BE;"></i></i>Trabajar
+                como programador <span class="text-muted float-end"><i
+                        class="far fa-calendar-alt me-1"></i>25/08/2025</span></li>
+        </ul>
+        <div class="mt-4 d-flex justify-content-end gap-2">
+            <button class="btn btn-outline-primary btn-p"><i class="fas fa-share-alt me-2"></i>Compartir Perfil</button>
+            <button class="btn btn-outline-primary btn-p"><i class="fas fa-edit me-2"></i>Editar Perfil</button>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

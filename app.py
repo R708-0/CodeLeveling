@@ -153,8 +153,10 @@ def logout():
 @app.route("/")
 @login_required
 def perfil():
-    
-    return render_template("perfil.html")
+    skills = get_skills()
+    rows = execute_db("SELECT * FROM users WHERE id = ?", param=(session["user_id"],), result=True)
+    user = rows[0]
+    return render_template("perfil.html", skills=skills, user = user)
 
 @app.route("/tareas")
 @login_required
@@ -164,10 +166,7 @@ def tareas():
 @app.route("/habilidades")
 @login_required
 def habilidades():
-    skills = get_skills()
-    rows = execute_db("SELECT * FROM users WHERE id = ?", param=(session["user_id"],), result=True)
-    user = rows[0]
-    return render_template("habilidades.html", skills=skills, user = user)
+    return render_template("habilidades.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
