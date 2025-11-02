@@ -6,21 +6,28 @@ Code Leveling
 
 {% block body %}
 <div class="container mt-5">
-    <div class="card p-4 card-p">
-        <div class="d-flex align-items-center">
-            {% if user.photo %}
+    <!-- tarjeta del perfil -->
+    <div class="card p-4 card-p w-50 h-75 overflow-auto">
+        <h3 class="mb-0 text-center mb-5"><i class="fas fa-user-circle me-2"></i>{{user.name}}</h3>
+        <div class="d-flex align-items-center justify-content-center">
+            <div class="ms-5 text-center">
+                <h1 style="font-size:5rem;"> 7 </h1> 
+                <p class="letter-1"> Nivel </p> 
+                
+            </div>
+            <div class="ms-5">
+                {% if user.photo %}
                 <img src="{{ url_for('static', filename='img/' ~ user.photo) }}" alt="Foto de perfil" class="rounded-circle" height="100" width="100">
-            {% else %}
-                <img src="/static/img/hacker.png" alt="Foto de perfil" class="rounded-circle" height="100" width="100">
-            {% endif %}
-            <div class="ms-4">
-                <h3 class="mb-0"><i class="fas fa-user-circle me-2"></i>{{user.name}}</h3>
-                <p class="letter-1 mt-2">Titulo : Programador</p>
-                <p class="letter-1"> Rango : junior II </p>
-                <p class="letter-1"> Nivel : 7 </p>
+                {% else %}
+                    <img src="/static/img/hacker.png" alt="Foto de perfil" class="rounded-circle" height="100" width="100">
+                {% endif %}
+                <h6 class="letter-1">Titulo : Programador</h6>
+                <h6 class="letter-1"> Rango : junior II </h6>
             </div>
         </div>
+
         <hr>
+
         <h5 class="mt-3 text-center letter-1">Habilidades</h5>
 
         {% for skill in skills %}
