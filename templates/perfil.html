@@ -8,23 +8,28 @@ Code Leveling
 <div class="container mt-5">
     <!-- tarjeta del perfil -->
     <div class="card p-4 card-p w-50 h-75 overflow-auto">
-        <h3 class="mb-0 text-center mb-5"><i class="fas fa-user-circle me-2"></i>{{user.name}}</h3>
+        <h3 class="mb-0 text-center mb-3"><i class="fas fa-user-circle me-2"></i>{{user.name}}</h3>
+
         <div class="d-flex align-items-center justify-content-center">
-            <div class="ms-5 text-center">
-                <h1 style="font-size:5rem;"> 7 </h1> 
-                <p class="letter-1"> Nivel </p> 
-                
+            <div class="ms-5 text-center me-3">
+                <h1 class="pb-" style="font-size:5rem; color:#0090fe;"> 7 </h1> 
+                <p class="letter-1 mt-4"> Nivel </p>    
             </div>
+
             <div class="ms-5">
                 {% if user.photo %}
-                <img src="{{ url_for('static', filename='img/' ~ user.photo) }}" alt="Foto de perfil" class="rounded-circle" height="100" width="100">
+                <img src="{{ url_for('static', filename='img/' ~ user.photo) }}" alt="Foto de perfil" class="rounded-circle mt-4" height="100" width="100">
                 {% else %}
                     <img src="/static/img/hacker.png" alt="Foto de perfil" class="rounded-circle" height="100" width="100">
                 {% endif %}
-                <h6 class="letter-1">Titulo : Programador</h6>
-                <h6 class="letter-1"> Rango : junior II </h6>
+                <h6 class="letter-1 mt-3"> <spam style="color:#0090fe;">Titulo :</spam>  Programador</h6>
+                <h6 class="letter-1"> <spam style="color:#0090fe;"> Rango : </spam> junior II </h6>
             </div>
         </div>
+        <p class="text-center mt-3 "> 
+            Descripccion detallada del personaje ej.
+            programador malditango que hace de todo
+        </p>
 
         <hr>
 
