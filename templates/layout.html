@@ -22,24 +22,26 @@
         </header>
        
         <nav class="navbar navbar-expand-md border">
-            <div class="container justify-content-center d-flex align-items-center">
+            <div class="container justify-content-center d-flex align-items-center row">
                 {% if session['user_id'] %}
-                <div class="button-container nav-item mx-auto" style="transform: translateX(200px);">
-                    <button class="button">
-                        <a class="nav-link" href="/tareas">Tareas</a>
-                    </button>
-                    <button class="button">
-                        <a  class="nav-link" href="/">Perfil</a>
-                    </button>
-                    <button class="button">
-                        <a  class="nav-link" href="/habilidades">Habilidades</a>
-                    </button>
-                </div>
-                <div class="ms-auto">
-                    <button class="btn btn-outline-primary btn-p ">
-                        <a class="nav-link" href="/logout">Cerrar sesion</a>
-                    </button>
-                </div>
+                    <div class="col">a</div>
+                    <div class="button-container nav-item mx-auto col" >
+                        <button class="button">
+                            <a class="nav-link" href="/tareas">Tareas</a>
+                        </button>
+                        <button class="button">
+                            <a  class="nav-link" href="/">Perfil</a>
+                        </button>
+                        <button class="button">
+                            <a  class="nav-link" href="/habilidades">Habilidades</a>
+                        </button>
+                
+                    
+                        <button class="btn btn-outline-primary btn-p ">
+                            <a class="nav-link" href="/logout">Cerrar sesion</a>
+                        </button>
+                    </div>
+                    <div class="col">a</div>
                 {% else %}
                 <div class="container justify-content-center d-flex align-items-center">
                     <div class="button-container">
@@ -52,7 +54,7 @@
                     </div>
                 </div>
                 {% endif %}
-                </div>
+
             </div>
             
         </nav> 
