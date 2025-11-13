@@ -23,9 +23,9 @@ Code Leveling
             <!-- foto -->
             <div class="ms-5">
                 {% if user.photo %}
-                <img src="{{ url_for('static', filename='img/' ~ user.photo) }}" alt="Foto de perfil" class="rounded-circle mt-4" height="100" width="100">
+                <img src="{{ url_for('static', filename='img/' ~ user.photo) }}" alt="Foto de perfil" class="rounded-circle img-fluid mt-4" style="max-width:100px">
                 {% else %}
-                    <img src="/static/img/hacker.png" alt="Foto de perfil" class="rounded-circle" height="100" width="100">
+                    <img src="/static/img/hacker.png" alt="Foto de perfil" class="rounded-circle" style="max-width:100px">
                 {% endif %}
                 <h6 class="letter-1 mt-3"> <spam style="color:#0090fe;">Titulo :</spam>  Programador</h6>
                 <h6 class="letter-1"> <spam style="color:#0090fe;"> Rango : </spam> junior II </h6>

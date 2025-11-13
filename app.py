@@ -168,5 +168,9 @@ def tareas():
 def habilidades():
     return render_template("habilidades.html")
 
+@app.route("/pruebas")
+def pruebas():
+    return render_template("pruebas.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
