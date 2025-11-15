@@ -3,7 +3,7 @@
 <html lang="es">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- bootstrap js para el navbar y responsive-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -21,11 +21,11 @@
             </div>  
         </header>
        
-        <nav class="navbar navbar-expand-md border">
-            <div class="container justify-content-center d-flex align-items-center bg-primary">
+        <nav class="navbar navbar-collapse navbar-toggler navbar-expand-md border">
+            <div class="container justify-content-center d-flex align-items-center">
                 {% if session['user_id'] %}
-                    <div class="col container-fluid bg-primary">inicio</div>
-                    <div class="col container-fluid button-container nav-item mx-auto bg-danger" >
+                    <div class="col container-fluid "></div>
+                    <div class="col container-fluid button-container nav-item mx-auto " >
                         <button class="button">
                             <a class="nav-link" href="/tareas">Tareas</a>
                         </button>
@@ -50,8 +50,8 @@
                     </div>
                 </div>
                 {% endif %}
-                <div class="col container-fluid text-center">
-                    <button class="btn btn-outline-primary btn-p bg-success">
+                <div class="col container-fluid text-center w-100 w-md-75 w-lg-50">
+                    <button class="btn btn-outline-primary ">
                         <a class="nav-link" href="/logout">Cerrar sesion</a>
                     </button>
                 </div>
