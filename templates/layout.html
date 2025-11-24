@@ -29,15 +29,23 @@
             <div class="container-fluid ">
                 <!-- session abierta -->
                 {% if session['user_id'] %}
-                   <div class="col text-center">logo</div>
-                    <div class="col container button-container nav-item mx-auto " >
-                        <button class="button">
+
+                   <!-- boton hamburguesa -->
+                   <div class="col mx-s">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" dat-bs-tarjet="#navMain">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                   </div>
+                   
+                   <!-- menus -->
+                    <div class="collapse navbar-collapse col container button-container nav-item mx-auto " id="navMain">
+                        <button class="button-nav">
                             <a class="nav-link" href="/tareas">Tareas</a>
                         </button>
-                        <button class="button">
+                        <button class="button-nav">
                             <a  class="nav-link" href="/">Perfil</a>
                         </button>
-                        <button class="button">
+                        <button class="button-nav">
                             <a  class="nav-link" href="/habilidades">Habilidades</a>
                         </button>   
                     </div>
@@ -61,13 +69,14 @@
                     </div>
                 {% endif %}
             </div>     
-        </nav> 
+        </nav>
 
+        <!-- contenido de la pagina -->
         <main class="container my-3">
                 {% block body %}{% endblock %} 
         </main>
-
         <footer>
+            Code Leveling
         </footer> 
 
     </body>

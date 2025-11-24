@@ -1,7 +1,10 @@
+/* importar fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+
+/* fuentes personalizadas */
 .title{
   font-family: 'Rajdhani','Orbitron', sans-serif;
-  font-size: 4rem ;
+  font-size: clamp(2rem, 10vw, 5rem); /* (minimo, 10%pantalla, maximo) */
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -11,15 +14,17 @@
   padding: 0 1rem;
   line-height: 1.2;
 }
-.container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+.letter-1{
+  font-family: 'Rajdhani','Orbitron', sans-serif;
+  font-weight: bold;
+  color:#011f35;
 }
 
-/* botones en barra de nav */
+/* contenedores personalizados */
 .button-container {
   display: flex;
+  flex-wrap: wrap;
   background-color: rgba(245, 73, 144);
   width: 350px;
   height: 40px;
@@ -31,7 +36,9 @@
         rgba(245, 73, 144, 0.5) 3px 5px 5px;
 
 }
-.button {
+
+/* botones para barra de nav */
+.button-nav {
   outline: 0 !important;
   border: 0 !important;
   width: 40px;
@@ -46,27 +53,11 @@
   cursor: pointer;
 }
 
-.button:hover {
+.button-nav:hover {
   transform: translateY(-3px);
 }
 
-/* tarjetas */
-.mb-0{
-  font-family:'Rajdhani','Orbitron', sans-serif;
-  font-weight: bold;
-}
-.progress-bar{
-  font-weight: bold;
-  font-size: 0.9rem;
-}
-.letter-1{
-  font-family: 'Rajdhani','Orbitron', sans-serif;
-  font-weight: bold;
-  color:#011f35;
-}
-
-/* personalizar tarjetas, botones */
-
+/* tarjetas personalizadas*/
 .card-p {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -74,9 +65,16 @@
   transform: scale(1.001);
   box-shadow: 0.3rem 0 0.5rem rgba(0, 0, 0, 0.2);
 }
+
+.progress-bar{
+  font-weight: bold;
+  font-size: 0.9rem;
+}
 .animate-bar{
   transition: width 1s ease-in-out;
 }
+
+/* botones personalizados */
 .btn-p{
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
