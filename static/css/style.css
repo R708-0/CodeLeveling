@@ -4,7 +4,7 @@
 /* fuentes personalizadas */
 .title{
   font-family: 'Rajdhani','Orbitron', sans-serif;
-  font-size: clamp(2rem, 10vw, 5rem); /* (minimo, 10%pantalla, maximo) */
+  font-size: clamp(3rem, 10vw, 5rem); /* (minimo, 10%pantalla, maximo) */
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 2px;
