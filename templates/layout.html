@@ -19,65 +19,55 @@
     </head>
     <body>
         <header>
-            <div class="container text-center mx-auto my-3">
+            <div class="container text-center my-3">
                 <h1 class="title">Code Leveling</h1>    
             </div>  
         </header>
        
         <!-- nav responsive -->
-        <nav class="border navbar navbar-expand-md">
-            <div class="container-fluid ">
-                <!-- session abierta -->
-                {% if session['user_id'] %}
+        <nav class="navbar navbar-expand-md">
+      
+            <div class="container">
 
-                   <!-- boton hamburguesa -->
-                   <div class="col mx-s">
-                        
-                   </div>
-                   
-                   
-                   <!-- menus -->
-                    <div class="col mt-3 d-felx">
-                        <div class="button-container mx-auto nav-item" >
-                            <button class="button-nav">
-                                <a class="nav-link" href="/tareas">Tareas</a>
-                            </button>
-                            <button class="button-nav">
-                                <a  class="nav-link" href="/">Perfil</a>
-                            </button>
-                            <button class="button-nav">
-                                <a  class="nav-link" href="/habilidades">Habilidades</a>
-                            </button>   
-                        </div>
-                    </div>
-                    
+                <!-- con la sesion abierta -->
+                {% if session["user_id"] %}
+                <div class="container p-3">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#confi">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <!-- menu -->
+                <div class="container d-flex justify-content-center p-3">
+                    <ul class="navbar-nav button-container">
+                        <li class="nav-item"> <a class="nav-link button-nav" href="/tareas"> Tareas </a> </li>
+                        <li class="nav-item"> <a class="nav-link button-nav" href="/"> Perfil </a> </li>
+                        <li class="nav-item"> <a class="nav-link button-nav" href="/habilidades"> Habilidades </a> </li>
+                    </ul>
+                </div>
+                <!-- boton de cerrar sesion -->
+                <div class="container collapse navbar-collapse justify-content-end" id="confi">
+                    <button class="btn btn-outline-primary btn-p">
+                        <a class="nav-link" href="/logout"> Cerrar Sesión </a>
+                    </button>    
+                </div>
 
-                    <div class="col d-flex justify-content-center nav-item mt-3">
-                        <button class="btn btn-outline-primary">
-                            <a class="nav-link" href="/logout">Cerrar sesion</a>
-                        </button>
-                    </div>
-                <!-- session cerrada  -->
+                <!-- con la sesion cerrada -->
                 {% else %}
-                    <div class="container justify-content-center d-flex align-items-center">
-                        <div class="button-container">
-                            <button class="button">
-                                <a class="nav-link" href="/register">Registrar</a>
-                            </button>
-                            <button class="button">
-                                <a class="nav-link" href="/login">Ingresar</a>
-                            </button>
-                        </div>
-                    </div>
+                <div class="container d-flex justify-content-center p-3">
+                    <ul class="navbar-nav button-container">
+                        <li class="nav-item"> <a class="nav-link button-nav" href="/register"> Registrarse </a> </li>
+                        <li class="nav-item"> <a class="nav-link button-nav" href="/login"> Ingresar </a> </li>
+                    </ul>
+                </div>
                 {% endif %}
-            </div>     
+            </div>
         </nav>
 
         <!-- contenido de la pagina -->
         <main class="container my-3">
                 {% block body %}{% endblock %} 
         </main>
-        <footer>
+        <footer class="text-center py-3">
             Code Leveling
         </footer> 
 

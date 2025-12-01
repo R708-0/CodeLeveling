@@ -8,7 +8,7 @@ Login CodeLeveling
 
 <div class="container mt-5">
     <form action="/login" method="POST"> 
-        <div class="card p-4 card-p">
+        <div class="card p-4 card-p w-50 mx-auto">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
@@ -28,7 +28,7 @@ Login CodeLeveling
             <div class="mb-3">
                 <input name="password" class="form-control mx-auto w-auto" placeholder="Contraseña" type="password" />
             </div>
-            <button type="submit" class="btn btn-primary btn-p">Ingresar</button>
+            <button type="submit" class="btn btn-primary btn-p mx-auto w-auto">Ingresar</button>
         </div> 
     </form>
 </div>
