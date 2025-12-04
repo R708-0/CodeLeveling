@@ -6,31 +6,40 @@ Login CodeLeveling
 
 {% block body %}
 
-<div class="container mt-5">
-    <form action="/login" method="POST"> 
-        <div class="card p-4 card-p w-50 mx-auto">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-danger text-center">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-            <div class="mb-3 text-center">
-                <h3 class="letter-1">Ingresar</h3>
-            </div>
-            <div class="mb-3">
-                <input name="username" class="form-control mx-auto w-auto" placeholder="Usuario" autocomplete="off"
-                    autofocus type="text" />
-            </div>
-            <div class="mb-3">
-                <input name="password" class="form-control mx-auto w-auto" placeholder="Contraseña" type="password" />
-            </div>
-            <button type="submit" class="btn btn-primary btn-p mx-auto w-auto">Ingresar</button>
-        </div> 
-    </form>
+<!-- contenedor - centra el card horizntal y verticalmente -->
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="card card-p">
+        <div class="card-body">
+            <!-- titulo formulario -->
+            <h3 class="card-title letter-1 text-center mb-3">Ingresar</h3>
+
+            <form action="/login" method="POST">
+                <!-- caja de mansajes de error en los inputs -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-danger text-center">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
+                <!-- usuario -->
+                <div class="mb-3">
+                    <input name="username" class="form-control mx-auto w-auto" placeholder="Usuario" autocomplete="off" autofocus type="text" />
+                </div>
+                <!-- password -->
+                <div class="mb-3">
+                    <input name="password" class="form-control mx-auto w-auto" placeholder="Contraseña" type="password" />
+                </div>
+                <!-- boton ingresar -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-p mx-auto w-auto">Ingresar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

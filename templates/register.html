@@ -5,39 +5,51 @@
 {% endblock %}
 
 {% block body %}
-<form action="/register" method="POST" enctype="multipart/form-data">
-    <div class = "container mt-5">
-        <div class="card p-4 card-p w-50 mx-auto">
-            {% with messages = get_flashed_messages(with_categories = true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-danger text-center">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-            <div class="mb-3 text-center">
-                <h3 class="letter-1">Registrar</h3>
-            </div>
-            <div class="mb-3 text-center">
-                <label for="photo" class="form-label mb-2 fw-bold" >Agregue una Fotografía para su Perfil (Opcional)</label>    
-                <input name="photo" class="form-control " type="file" accept="image/*" />
-            </div>
-            <div class="mb-3">    
-                <input name="name" class="form-control " placeholder="Nombre completo" autocomplete="off" autofocus type="text" />
-            </div>
-            <div class="mb-3">    
-                <input name="username" class="form-control " placeholder="Usuario" autocomplete="off"  type="text" />
-            </div>
-            <div class="mb-3">
-                <input name="password" class="form-control" placeholder="Contraseña" type="password" />
-            </div>
-            <div class="mb-3">
-                <input name="confirm" class="form-control" placeholder="Confirmar contraseña" type="password" />
-            </div>
-            <button type="submit" class="btn btn-primary btn-p">Registrar</button>
+<!-- contenedor que centra todo el formulario -->
+<div class = "container d-flex justify-content-center align-items-center mt-5">
+    <!-- estilo tarjeta -->
+    <div class="card card-p">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-3">Registrar</h3>
+
+            <!-- multipart necesario para subir archivos -->
+            <form action="/register" method="POST" enctype="multipart/form-data">
+                <!-- mensajes para errores en los inputs -->
+                {% with messages = get_flashed_messages(with_categories = true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-danger text-center">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
+                <!-- campo fotografia -->
+                <div class="mb-3 text-center">
+                    <label for="photo" class="form-label mb-2 fw-bold" >Agregue una Fotografía para su Perfil (Opcional)</label>    
+                    <input name="photo" class="form-control " type="file" accept="image/*" />
+                </div>
+                <!-- campo nombre completo -->
+                <div class="mb-3">    
+                    <input name="name" class="form-control " placeholder="Nombre completo" autocomplete="off" autofocus type="text" />
+                </div>
+                <!-- username -->
+                <div class="mb-3">    
+                    <input name="username" class="form-control " placeholder="Usuario" autocomplete="off"  type="text" />
+                </div>
+                <!-- password -->
+                <div class="mb-3">
+                    <input name="password" class="form-control" placeholder="Contraseña" type="password" />
+                </div>
+                <!-- confirmar password -->
+                <div class="mb-3">
+                    <input name="confirm" class="form-control" placeholder="Confirmar contraseña" type="password" />
+                </div>
+                <!-- boton registrar -->
+                <button type="submit" class="btn btn-primary btn-p">Registrar</button>
+            </form>
         </div>
     </div>
-</form>
+</div>
 {% endblock %}
