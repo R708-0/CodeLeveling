@@ -5,68 +5,77 @@ Code Leveling
 {% endblock %}
 
 {% block body %}
-<div class="container mt-5">
+<div class="container d-flex justify-content-center mt-5">
+
     <!-- tarjeta del perfil -->
-    <div class="card p-4 card-p w-100 w-md-75 w-lg-50 overflow-auto">
-        
-        <!-- Nombre de usuario -->
-        <h3 class="mb-3 text-center letter-1">
-            <i class="fas fa-user-circle me-2"></i>{{user.name}}
-        </h3>
+    <div class="card shadow" style="width: 100%;">
+        <div class="card-body">
 
-        <!-- datos del  usuario -->
-        <div class="d-flex flex-colum flex-md-row align-items-center justify-content-center gap-4">
-            <div class="text-center">
-                <h1 class="display-1 text-primary title"> 7 </h1> 
-                <p class="letter-1 mt-4"> Nivel </p>    
-            </div>
-            <!-- foto -->
-            <div class="ms-5">
-                {% if user.photo %}
-                <img src="{{ url_for('static', filename='img/' ~ user.photo) }}" alt="Foto de perfil" class="rounded-circle img-fluid mt-4" style="max-width:100px">
-                {% else %}
-                    <img src="/static/img/hacker.png" alt="Foto de perfil" class="rounded-circle" style="max-width:100px">
-                {% endif %}
-                <h6 class="letter-1 mt-3"> <spam style="color:#0090fe;">Titulo :</spam>  Programador</h6>
-                <h6 class="letter-1"> <spam style="color:#0090fe;"> Rango : </spam> junior II </h6>
-            </div>
-        </div>
-        <!-- descripcion -->
-        <p class="text-center mt-3 "> 
-            Descripccion detallada del personaje ej.
-            programador malditango que hace de todo
-        </p>
+            <!--       #######    AREA DE DATOS DEL USUARIO     #######             -->
 
-        <hr>
+            <!-- Nombre -->
+            <h3 class="mb-3 text-center letter-1">
+                <i class="fas fa-user-circle me-2"></i>{{user.name}}
+            </h3>
 
-        <h5 class="mt-3 text-center letter-1">Habilidades</h5>
+            <!-- Nivel -->
+            <div class="d-flex flex-colum flex-md-row align-items-center justify-content-center gap-4">
+                <div class="text-center">
+                    <h1 class="display-1 letter-1"> 7 </h1> 
+                    <p class="letter-1 mt-4"> Nivel </p>    
+                </div>
 
-        {% for skill in skills %}
-        <div class="mb-3">
-            <label class="letter-1"><i class="{{skill.icon}} me-2"></i> {{skill.name}}: Nivel {{skill.level}}</label>
-            <div class="progress">
-                <div class="progress-bar {{skill.color}}" style="width: {{ skill.percent }}%;">
-                    {{skill.xp}} / {{skill.xp_max}}xp
+                <!-- foto -->
+                <div class="ms-5">
+                    {% if user.photo %}
+                    <img src="{{ url_for('static', filename='img/' ~ user.photo) }}" alt="Foto de perfil" class="rounded-circle img-fluid mt-4" style="max-width:100px">
+                    {% else %}
+                        <img src="/static/img/hacker.png" alt="Foto de perfil" class="rounded-circle" style="max-width:100px">
+                    {% endif %}
+                    <h6 class="letter-1 mt-3"> <spam style="color:#0090fe;">Titulo :</spam>  Programador</h6>
+                    <h6 class="letter-1"> <spam style="color:#0090fe;"> Rango : </spam> junior II </h6>
                 </div>
             </div>
-        </div>
-        {% endfor %}
-        <hr>
-        <h5 class="mt-3 text-center letter-1">Tareas Completadas</h5>
-        <ul class="list-grup">
-            <li class="list-group-item"><i class="fa-solid fa-circle-check" style="color: #63E6BE;"></i></i>Completar
-                curso Cs50 <spam class="text-muted float-end"><i class="far fa-calendar-alt me-1"></i>11/08/2025</spam>
-            </li>
-            <li class="list-group-item"><i class="fa-solid fa-circle-check" style="color: #63E6BE;"></i></i>Desarrollar
-                sistema de farmacia <spam class="text-muted float-end"><i
-                        class="far fa-calendar-alt me-1"></i>18/08/2025</spam></li>
-            <li class="list-group-item"><i class="fa-solid fa-circle-check" style="color: #63E6BE;"></i></i>Trabajar
-                como programador <spam class="text-muted float-end"><i
-                        class="far fa-calendar-alt me-1"></i>25/08/2025</spam></li>
-        </ul>
-        <div class="mt-4 d-flex justify-content-end gap-2">
-            <button class="btn btn-outline-primary btn-p"><i class="fas fa-share-alt me-2"></i>Compartir Perfil</button>
-            <button class="btn btn-outline-primary btn-p"><i class="fas fa-edit me-2"></i>Editar Perfil</button>
+
+            <!-- descripcion -->
+            <p class="text-center mt-3 "> 
+                Descripccion detallada del personaje ej.
+                programador apasionado con la capacidad de mejorar ilimitadamente.
+            </p>
+
+
+            <hr> <!--       #######    AREA DE HABILIDADES     #######             -->
+
+
+            <h4 class="card-title text-center letter-1 mb-5"><i class="fa-solid fa-laptop-code"></i> Habilidades</h4>
+
+            <!-- Por cada habilidad  -->
+            <div class="row mb-3 text-center">
+                {% for skill in skills %}
+                <div class="col-md mb-3">
+                    <!-- icono -->
+                    <i class=" {{skill.icon}} " style="color: #0b8ff4;font-size: 40px;"></i>
+                    <!-- nombre -->
+                    <h6 class="mt-2 letter-1">  {{skill.name}} </h6>
+                    <!-- nivel -->
+                    <span class="badge bg-info">Nivel: {{skill.level}}</span>
+                </div>
+                {% endfor %}
+            </div>
+
+
+            <hr> <!--       #######    AREA DE PROYECTOS     #######             -->
+
+
+            <h4 class="mt-3 text-center letter-1 mb-5">Proyectos Creados</h4>
+            
+            
+            
+
+            <div class="mt-4 d-flex justify-content-end gap-2">
+                <button class="btn btn-outline-primary btn-p"><i class="fas fa-share-alt me-2"></i>Compartir Perfil</button>
+                <button class="btn btn-outline-primary btn-p"><i class="fas fa-edit me-2"></i>Editar Perfil</button>
+            </div>
         </div>
     </div>
 </div>
