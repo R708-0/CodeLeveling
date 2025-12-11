@@ -11,7 +11,7 @@ Code Leveling
     <div class="card shadow" style="width: 100%;">
         <div class="card-body">
 
-            <!--       #######    AREA DE DATOS DEL USUARIO     #######             -->
+            <!--       #######    AREA DE USUARIO     #######             -->
 
             <!-- Nombre -->
             <h3 class="mb-3 text-center letter-1">
@@ -19,7 +19,7 @@ Code Leveling
             </h3>
 
             <!-- Nivel -->
-            <div class="d-flex flex-colum flex-md-row align-items-center justify-content-center gap-4">
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
                 <div class="text-center">
                     <h1 class="display-1 letter-1"> 7 </h1> 
                     <p class="letter-1 mt-4"> Nivel </p>    
@@ -32,14 +32,14 @@ Code Leveling
                     {% else %}
                         <img src="/static/img/hacker.png" alt="Foto de perfil" class="rounded-circle" style="max-width:100px">
                     {% endif %}
-                    <h6 class="letter-1 mt-3"> <spam style="color:#0090fe;">Titulo :</spam>  Programador</h6>
-                    <h6 class="letter-1"> <spam style="color:#0090fe;"> Rango : </spam> junior II </h6>
+                    <h6 class="letter-1 mt-3"> <span style="color:#0090fe;">Título :</span>  Programador</h6>
+                    <h6 class="letter-1"> <span style="color:#0090fe;"> Rango : </span> Junior II </h6>
                 </div>
             </div>
 
             <!-- descripcion -->
             <p class="text-center mt-3 "> 
-                Descripccion detallada del personaje ej.
+                Descripcción detallada del personaje ej.
                 programador apasionado con la capacidad de mejorar ilimitadamente.
             </p>
 
@@ -47,18 +47,18 @@ Code Leveling
             <hr> <!--       #######    AREA DE HABILIDADES     #######             -->
 
 
-            <h4 class="card-title text-center letter-1 mb-5"><i class="fa-solid fa-laptop-code"></i> Habilidades</h4>
+            <h4 class="card-title text-center letter-1 mb-5"><i class="fa-solid fa-bars-progress"></i> Habilidades</h4>
 
             <!-- Por cada habilidad  -->
             <div class="row mb-3 text-center">
                 {% for skill in skills %}
                 <div class="col-md mb-3">
                     <!-- icono -->
-                    <i class=" {{skill.icon}} " style="color: #0b8ff4;font-size: 40px;"></i>
+                    <i class=" {{skill.icon}} " style="color: #0080FF;font-size: 40px;"></i>
                     <!-- nombre -->
                     <h6 class="mt-2 letter-1">  {{skill.name}} </h6>
                     <!-- nivel -->
-                    <span class="badge bg-info">Nivel: {{skill.level}}</span>
+                    <span class="badge" style="background-color: #FF0080;">Nivel: {{skill.level}}</span>
                 </div>
                 {% endfor %}
             </div>
@@ -67,11 +67,22 @@ Code Leveling
             <hr> <!--       #######    AREA DE PROYECTOS     #######             -->
 
 
-            <h4 class="mt-3 text-center letter-1 mb-5">Proyectos Creados</h4>
+            <h4 class="card-title text-center letter-1 mb-5"><i class="fa-solid fa-laptop-code"></i> Proyectos Creados</h4>
             
-            
-            
+            <!-- por cada proyecto (to-do) -->
+            <div class="text-center">
+                <div class="mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fas fa-trophy fa-3x text-info mb-3"></i>
+                            <h5 class="card-title">Farmacia</h5>
+                            <a class="btn btn-outline-primary btn-p" href="https://ar0.forgeofempires.com/page/" target="_blank">Ver proyecto</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- boton compartir y editar -->
             <div class="mt-4 d-flex justify-content-end gap-2">
                 <button class="btn btn-outline-primary btn-p"><i class="fas fa-share-alt me-2"></i>Compartir Perfil</button>
                 <button class="btn btn-outline-primary btn-p"><i class="fas fa-edit me-2"></i>Editar Perfil</button>
