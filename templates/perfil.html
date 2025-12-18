@@ -5,7 +5,7 @@ Code Leveling
 {% endblock %}
 
 {% block body %}
-<div class="container d-flex justify-content-center mt-5">
+<div class="container d-flex justify-content-center my-5">
 
     <!-- tarjeta del perfil -->
     <div class="card shadow" style="width: 100%;">
@@ -21,7 +21,7 @@ Code Leveling
             <!-- Nivel -->
             <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
                 <div class="text-center">
-                    <h1 class="display-1 letter-1"> 7 </h1> 
+                    <h1 class="display-1 letter-1 text-primary"> {{ user.level }} </h1> 
                     <p class="letter-1 mt-4"> Nivel </p>    
                 </div>
 
@@ -32,17 +32,21 @@ Code Leveling
                     {% else %}
                         <img src="/static/img/hacker.png" alt="Foto de perfil" class="rounded-circle" style="max-width:100px">
                     {% endif %}
-                    <h6 class="letter-1 mt-3"> <span style="color:#0090fe;">Título :</span>  Programador</h6>
-                    <h6 class="letter-1"> <span style="color:#0090fe;"> Rango : </span> Junior II </h6>
+                    <h6 class="letter-1 mt-3"> <span style="color:#0090fe;">Título :</span> {{ titulo }} </h6>
+                    <h6 class="letter-1"> <span style="color:#0090fe;"> Rango : </span> {{ rango }} </h6>
                 </div>
             </div>
 
             <!-- descripcion -->
-            <p class="text-center mt-3 "> 
-                Descripcción detallada del personaje ej.
-                programador apasionado con la capacidad de mejorar ilimitadamente.
+            <p class="text-center mt-3 ">
+                {% if user.description %}
+                    {{ user.description }}
+                {% else %} 
+                    Mi pasión y deseo de ser el mejor programador me impulsan a aprender de forma continua.
+                {% endif %}
             </p>
-
+            
+            
 
             <hr> <!--       #######    AREA DE HABILIDADES     #######             -->
 
@@ -70,16 +74,19 @@ Code Leveling
             <h4 class="card-title text-center letter-1 mb-5"><i class="fa-solid fa-laptop-code"></i> Proyectos Creados</h4>
             
             <!-- por cada proyecto (to-do) -->
+            
             <div class="text-center">
+                {% for project in projects %}
                 <div class="mb-4">
                     <div class="card">
                         <div class="card-body">
                             <i class="fas fa-trophy fa-3x text-info mb-3"></i>
-                            <h5 class="card-title">Farmacia</h5>
-                            <a class="btn btn-outline-primary btn-p" href="https://ar0.forgeofempires.com/page/" target="_blank">Ver proyecto</a>
+                            <h5 class="card-title">{{project.name}}</h5>
+                            <a class="btn btn-outline-primary btn-p" href="{{project.link}}" target="_blank">Ver proyecto</a>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
 
             <!-- boton compartir y editar -->

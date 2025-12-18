@@ -1,11 +1,10 @@
-import sqlite3
 import os
 from flask import Flask, render_template, session, request, redirect, flash, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
-from werkzeug.utils import secure_filename
 from flask_session import Session
 
 from helpers import login_required
+from helpers import execute_db
 
 app = Flask(__name__)
 
@@ -17,45 +16,6 @@ app.config["MAX_CONTENT_LENGTH"] = 2 * 1024 * 1024
 ALLOWED_EXTENSIONS = {"png","jpg","jpeg","gif"}
 Session(app)
 
-# verificar extenciones de archivo validos
-def allowed_files(filename):
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
-
-# bases de datos
-def execute_db(query, param=(),result = False):
-    connection = sqlite3.connect('leveling.db')
-    connection.row_factory = sqlite3.Row
-    db = connection.cursor()
-    db.execute(query,param)
-
-    rows = None
-    if result == True:
-        rows = db.fetchall() 
-
-    connection.commit()
-    connection.close()
-
-    return rows
-
-def get_skills():
-    
-    rows = execute_db('SELECT * FROM skills;', result = True)
-
-    skills = []
-    for row in rows:
-        percent = int((row["xp"] / row["xp_max"]) * 100)
-        skills.append(
-            {
-            'name': row["name"],
-            'level': row["level"],
-            'xp': row["xp"],
-            'xp_max': row["xp_max"],
-            'percent': percent,
-            'icon': row["icon"],
-            'color': row["color"]
-            }
-        )
-    return skills
 
 #           LOGIN Y REGISTER
 @app.route("/register", methods=["GET", "POST"])
@@ -64,6 +24,7 @@ def register():
         # declaracion de variables
         photo = request.files["photo"]
         name = request.form.get("name").title()
+        description = request.form.get("description")
         username = request.form.get("username").lower()
         password = request.form.get("password")
         confirm = request.form.get("confirm")
@@ -81,6 +42,7 @@ def register():
         if confirm != password:
             flash("La contraseña y la confirmación no coinciden")
             return render_template("register.html")
+        # Descripcion es opcional
         
         # guardar foto en base de datos y validar formato
         photo_filename = None
@@ -102,7 +64,7 @@ def register():
         # registrar en la base de datos
         try:
             password_hash = generate_password_hash(password)
-            execute_db("INSERT INTO users (username, hash, name, photo) VALUES (?, ?, ?, ?);", param=(username, password_hash, name, photo_filename))
+            execute_db("INSERT INTO users (username, hash, name, photo, description) VALUES (?, ?, ?, ?, ?);", param=(username, password_hash, name, photo_filename, description))
         except Exception as e:
             flash("Ocurrio un error al registrar :/ intentalo nuevamente")
             return render_template("register.html")
@@ -153,10 +115,45 @@ def logout():
 @app.route("/")
 @login_required
 def perfil():
-    skills = get_skills()
-    rows = execute_db("SELECT * FROM users WHERE id = ?", param=(session["user_id"],), result=True)
+    # Variables 
+    skills = execute_db("SELECT s.icon, s.name, us.level FROM users_skills us JOIN skills s ON us.skill_id = s.id WHERE us.user_id = ?",param=(session["user_id"],),result=True)
+    projects = execute_db("SELECT name, link FROM projects WHERE user_id = ? ", param=(session["user_id"],),result=True)
+    rows = execute_db("SELECT * FROM users WHERE id = ?;", param=(session["user_id"],), result=True)
     user = rows[0]
-    return render_template("perfil.html", skills=skills, user = user)
+
+    # Funcion para el titulo del usuario
+    titulo = ""
+    if user["level"] <= 30:
+        titulo = "Estudiante"
+    elif user["level"] <= 60:
+        titulo = "Junior"
+    elif user["level"] <= 90:
+        titulo ="Profesional"
+    elif user["level"] <= 100:
+        titulo = "Senior"
+    else :
+        titulo = "Master"
+
+    # Funcion para el rango
+    rango = ""
+    r = user["level"] % 30
+    #print(r)
+
+    if user["level"] >= 100:
+        rango ="Leyenda"
+    elif user["level"] >= 90:
+        rango = "Élite"
+    elif user["level"] == 0:
+        rango = "Aspirante"
+    elif r >= 20 :
+        rango = "Élite"
+    elif r >= 10 :
+        rango = "Avanzado"
+    else : 
+        rango = "Novato"
+
+    # Renderizar pagina    
+    return render_template("perfil.html", skills=skills, user = user, titulo=titulo, rango =rango, projects=projects)
 
 @app.route("/tareas")
 @login_required
