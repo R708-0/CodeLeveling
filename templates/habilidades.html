@@ -7,11 +7,73 @@ Code Leveling
 {% block body %}
 <!-- contenedor general -->
 <div class="container d-flex justify-content-center my-5">
-    <!-- tarjeta de habilidades -->
-        <!-- seccion aprender habilidad -->
-        <!-- seccion habilidades -->
-        <!-- seccion proyectos -->
-</div>
+    <div class="card shadow" style="width:100%;">
+        <div class="card-body">
 
+            <!-- ########## SECCION: APRENDER HABILIDADES ########## -->
+
+            <h4 class="card-title letter-1 mb-3"><i class="fa-solid fa-book" ></i> Aprender Habilidades</h4>
+            <form>
+                <div class="mb-3">
+                    <label for="skill_selector" class="form-label">Selecciona una habilidad.</label>
+                    <select class="form-select" id="skill_selector" name="skill_id">
+                        <option selected disabled> Habilidad </option>
+                        {% for skill in skills %}
+                            <option value="{{skill.name}}">{{skill.name | capitalize}}</option>
+                        {% endfor %}
+                    </select> 
+                </div>
+                <button type="submit" class="btn btn-outline-primary btn-p">Aprender <i class="fa-solid fa-circle-plus"></i></button>
+            </form>
+
+            <hr>
+
+            <!-- ########## SECCION: MOSTRAR HABILIDADES ########### -->
+
+            <h4 class="card-title letter-1"><i class="fa-solid fa-bars-progress "></i> Mis Habilidades</h4>
+            <div  class="mb-3">
+                <ul class="list-group">
+                    {% for skill in skills %}
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="{{skill.icon}} text-primary me-2"></i>
+                                <strong>{{skill.name}}</strong>
+                            </div>
+                            <span class="badge" style="background-color:#FF0080;">Nivel: {{skill.level}}</span>
+                        </div>
+                        <div class="progress mt-2">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: {{skill.xp/skill.xp_max*100 | round}}%" aria-valuenow="{{skill.xp}}" aria-valuemin="0" aria-valuemax="{{skill.xp_max}}">
+                                {{skill.xp}} XP
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <hr>
+
+            <!-- ########## SECCION: PROYECTOS ########## -->
+
+            <h4 class="card-title letter-1 mb-3"><i class="fa-solid fa-laptop-code "></i> Crear Proyecto</h4>
+            <form>
+                <div class="mb-3">
+                    <label class="form-label" for="p_name"><strong>Nombre del proyecto</strong></label>
+                    <input class="form-control" id="p_name" name="pj_name" type="text" placeholder="Ej. To-do list">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="p_link"><strong>Enlace</strong></label>
+                    <input class="form-control" id="p_link" name="pj_link" type="url" placeholder="Ej. Github/mi-proyect.com">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="p_time"><strong>Tiempo de desarrollo (Horas)</strong></label>
+                    <input class="form-control" id="p_time" name="pj_time" type="number" placeholder="Ej. 4">
+                </div>
+                <button class="btn btn-outline-primary btn-p">Guardar <i class="fa-solid fa-floppy-disk"></i></button>
+            </form>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

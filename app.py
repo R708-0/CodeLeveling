@@ -163,7 +163,8 @@ def tareas():
 @app.route("/habilidades")
 @login_required
 def habilidades():
-    return render_template("habilidades.html")
+    skills = execute_db("SELECT s.name, s.icon, us.level, us.xp, us.xp_max FROM users_skills us JOIN skills s ON us.skill_id = s.id WHERE us.user_id = ?", param=(session["user_id"],),result=True)
+    return render_template("habilidades.html", skills=skills)
 
 @app.route("/pruebas")
 def pruebas():
