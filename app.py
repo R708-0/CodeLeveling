@@ -160,11 +160,48 @@ def perfil():
 def tareas():
     return render_template("tareas.html")
 
+# RUTA PRINCIPAL DE HABILIDADES 
 @app.route("/habilidades")
 @login_required
 def habilidades():
+    skill_cat = execute_db("SELECT * FROM skills;",result=True)
     skills = execute_db("SELECT s.name, s.icon, us.level, us.xp, us.xp_max FROM users_skills us JOIN skills s ON us.skill_id = s.id WHERE us.user_id = ?", param=(session["user_id"],),result=True)
-    return render_template("habilidades.html", skills=skills)
+    return render_template("habilidades.html", skills=skills, skill_cat=skill_cat)
+
+# Aprender habilidades
+@app.route("/habilidades/aprender", methods=["POST"])
+@login_required
+def aprender_habilidad():
+    # Validar input de habilidad
+    skill_id = request.form.get("skill_id")
+    skill_cat = execute_db("SELECT * FROM skills;",result=True)
+    if not skill_id:
+        flash("Selecciona una habilidad primero")
+        return render_template("habilidades.html", skill_cat=skill_cat)
+
+
+    execute_db("INSERT INTO users_skills (user_id, skill_id) VALUES (?, ?);", param=(session["user_id"], skill_id))
+    return redirect("/habilidades")
+
+# Guardar proyecto
+@app.route("/habilidades/proyectos", methods=["POST"])
+@login_required
+def guardar_proyecto():
+    p_name = request.form.get("pj_name")
+    p_link = request.form.get("pj_link")
+    skill_cat = execute_db("SELECT * FROM skills;",result=True)
+
+    # Validacion de inputs
+    if not p_name:
+        flash("Ingrese un nombre de proyecto")
+        return render_template("habilidades.html", skill_cat=skill_cat)
+    if not p_link:
+        flash("Ingrese un enlace al proyecto")
+        return render_template("habilidades.html", skill_cat=skill_cat)
+
+    execute_db("INSERT INTO projects(name, link, user_id) VALUES (?, ?, ?);", param=(p_name, p_link, session["user_id"],))
+    return redirect("/habilidades")
+
 
 @app.route("/pruebas")
 def pruebas():

@@ -54,6 +54,7 @@
 
 .button-nav:hover {
   transform: translateY(-3px);
+  color: white;
 }
 
 /* tarjetas personalizadas*/

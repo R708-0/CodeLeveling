@@ -8,21 +8,32 @@ Code Leveling
 <!-- contenedor general -->
 <div class="container d-flex justify-content-center my-5">
     <div class="card shadow" style="width:100%;">
+        <!-- mesaje para errores de inputs -->
+        {% with messages = get_flashed_messages(with_categories = True) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-danger text-center">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <div class="card-body">
 
             <!-- ########## SECCION: APRENDER HABILIDADES ########## -->
 
             <h4 class="card-title letter-1 mb-3"><i class="fa-solid fa-book" ></i> Aprender Habilidades</h4>
-            <form>
+            <form action="/habilidades/aprender" method="POST">
                 <div class="mb-3">
                     <label for="skill_selector" class="form-label">Selecciona una habilidad.</label>
                     <select class="form-select" id="skill_selector" name="skill_id">
                         <option selected disabled> Habilidad </option>
-                        {% for skill in skills %}
-                            <option value="{{skill.name}}">{{skill.name | capitalize}}</option>
+                        {% for skill in skill_cat %}
+                            <option value="{{skill.id}}">{{skill.name | capitalize}}</option>
                         {% endfor %}
                     </select> 
                 </div>
+                
                 <button type="submit" class="btn btn-outline-primary btn-p">Aprender <i class="fa-solid fa-circle-plus"></i></button>
             </form>
 
@@ -57,7 +68,7 @@ Code Leveling
             <!-- ########## SECCION: PROYECTOS ########## -->
 
             <h4 class="card-title letter-1 mb-3"><i class="fa-solid fa-laptop-code "></i> Crear Proyecto</h4>
-            <form>
+            <form action="/habilidades/proyectos" method="POST">
                 <div class="mb-3">
                     <label class="form-label" for="p_name"><strong>Nombre del proyecto</strong></label>
                     <input class="form-control" id="p_name" name="pj_name" type="text" placeholder="Ej. To-do list">
