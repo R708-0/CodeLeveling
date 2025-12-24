@@ -31,16 +31,16 @@ def register():
         
         # Validar inputs
         if not name:
-            flash("Ingrese su nombre completo")
+            flash("Ingrese su nombre completo", "danger")
             return render_template("register.html")
         if not username:
-            flash("Debes ingresar un nombre usuario")
+            flash("Debes ingresar un nombre usuario", "danger")
             return render_template("register.html")
         if not password:
-            flash("Debes ingresar una contraseña")
+            flash("Debes ingresar una contraseña", "danger")
             return render_template("register.html")
         if confirm != password:
-            flash("La contraseña y la confirmación no coinciden")
+            flash("La contraseña y la confirmación no coinciden", "danger")
             return render_template("register.html")
         # Descripcion es opcional
         
@@ -52,13 +52,13 @@ def register():
             photo_filename = filename
         
             if not allowed_files(photo.filename):
-                flash("Formato de imagen no permitido (png, jpg, jpeg, gif)")
+                flash("Formato de imagen no permitido (png, jpg, jpeg, gif)", "danger")
                 return render_template("register.html")
 
         # Verificar si el usuario ya existe      
         existing = execute_db("SELECT * FROM users WHERE username = ?", param=(username,), result=True)
         if existing:
-            flash("El nombre de usuario ya esta en uso")
+            flash("El nombre de usuario ya esta en uso", "danger")
             return render_template("register.html")
         
         # registrar en la base de datos
@@ -66,7 +66,7 @@ def register():
             password_hash = generate_password_hash(password)
             execute_db("INSERT INTO users (username, hash, name, photo, description) VALUES (?, ?, ?, ?, ?);", param=(username, password_hash, name, photo_filename, description))
         except Exception as e:
-            flash("Ocurrio un error al registrar :/ intentalo nuevamente")
+            flash("Ocurrio un error al registrar :/ intentalo nuevamente", "danger")
             return render_template("register.html")
 
         return redirect("/login")
@@ -86,10 +86,10 @@ def login():
 
         # validacion de user y pass
         if not username:
-            flash("Ingrese un usuario válido")
+            flash("Ingrese un usuario válido", "danger")
             return render_template("login.html")
         if not password:
-            flash("Ingrese una contraseña válida")
+            flash("Ingrese una contraseña válida", "danger")
             return render_template("login.html")
         
         # consultar usuario a la base de datos
@@ -97,7 +97,7 @@ def login():
         
         # comprobar que solo exista un usuario y comprobar hash
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], password):
-            flash("Usuario o contraseña inválidos")
+            flash("Usuario o contraseña inválidos", "danger")
             return render_template("login.html")
         
         # guardar id del usuario en la sesion
@@ -174,13 +174,23 @@ def habilidades():
 def aprender_habilidad():
     # Validar input de habilidad
     skill_id = request.form.get("skill_id")
-    skill_cat = execute_db("SELECT * FROM skills;",result=True)
+
     if not skill_id:
-        flash("Selecciona una habilidad primero")
-        return render_template("habilidades.html", skill_cat=skill_cat)
+        flash("Primero selecciona una habilidad", "danger")
+        return redirect("/habilidades")
 
+    # Validar habilidad duplicada
+    duplicado = execute_db("SELECT 1 FROM users_skills WHERE user_id = ? AND skill_id = ?", param=(session["user_id"], skill_id), result=True)
+    if duplicado:
+        flash("Ya aprendiste esa habilidad", "danger")
+        return redirect("/habilidades")
 
-    execute_db("INSERT INTO users_skills (user_id, skill_id) VALUES (?, ?);", param=(session["user_id"], skill_id))
+    # Actualizar base de datos
+    try:
+        execute_db("INSERT INTO users_skills (user_id, skill_id) VALUES (?, ?);", param=(session["user_id"], skill_id))
+    except Exception as e:
+        flash("Ocurrió un error al aprender habilidad :( intente de nuevo)", "danger")
+        return redirect("/habilidades")
     return redirect("/habilidades")
 
 # Guardar proyecto
@@ -189,23 +199,30 @@ def aprender_habilidad():
 def guardar_proyecto():
     p_name = request.form.get("pj_name")
     p_link = request.form.get("pj_link")
-    skill_cat = execute_db("SELECT * FROM skills;",result=True)
-
+   
     # Validacion de inputs
     if not p_name:
-        flash("Ingrese un nombre de proyecto")
-        return render_template("habilidades.html", skill_cat=skill_cat)
+        flash("Ingresa un nombre de proyecto", "danger")
+        return redirect("/habilidades")
     if not p_link:
-        flash("Ingrese un enlace al proyecto")
-        return render_template("habilidades.html", skill_cat=skill_cat)
+        flash("Ingresa un enlace del proyecto", "danger")
+        return redirect("/habilidades")
+    
+    # Validar nombre repetido
+    name = execute_db("SELECT 1 FROM projects WHERE user_id = ? AND name = ?", param=(session["user_id"], p_name), result=True)
+    if name:
+        flash("El nombre de proyecto ya existe", "danger")
+        return redirect("/habilidades")
 
-    execute_db("INSERT INTO projects(name, link, user_id) VALUES (?, ?, ?);", param=(p_name, p_link, session["user_id"],))
+    # Actualizar base de datos
+    try:
+        execute_db("INSERT INTO projects(name, link, user_id) VALUES (?, ?, ?);", param=(p_name, p_link, session["user_id"],))
+        flash("El proyecto se guardó con éxito","success", "danger")
+    except Exception as error:
+        flash("Ocurrió un error al guardar el proyecto", "danger")
+        return redirect("/habilidades")
     return redirect("/habilidades")
 
-
-@app.route("/pruebas")
-def pruebas():
-    return render_template("pruebas.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
