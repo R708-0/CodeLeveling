@@ -25,7 +25,7 @@
 .button-container {
   display: flex;
   flex-wrap: wrap;
-  background-color: rgba(245, 73, 144);
+  background-color: #FF0080;
   width: 350px;
   height: 40px;
   align-items: center;
@@ -81,9 +81,26 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .btn-p:hover{
-  background-color:rgba(245, 73, 144);
-  border-color:rgba(245, 73, 144);
+  background-color:#FF0080;
+  border-color:#FF0080;
   transform: scale(1.05);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 5px,
         rgba(245, 73, 144, 0.5) 3px 5px 5px;
+}
+
+/* estilo para tareas completadas */
+.task-item{
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.task-item:hover{
+  background: #f1f1f1;
+}
+.completed{
+  text-decoration: line-through;
+  
+  background:#FF0080;
+}
+.completed:hover{
+  background: #ea0075;
 }

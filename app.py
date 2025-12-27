@@ -155,10 +155,13 @@ def perfil():
     # Renderizar pagina    
     return render_template("perfil.html", skills=skills, user = user, titulo=titulo, rango =rango, projects=projects)
 
+# Ruta de tareas
 @app.route("/tareas")
 @login_required
 def tareas():
-    return render_template("tareas.html")
+    skills = execute_db("SELECT s.name, s.icon FROM users_skills us JOIN skills s ON us.skill_id = s.id WHERE us.user_id = ?;", param=(session["user_id"],), result=True)
+    projects = execute_db("SELECT name FROM projects WHERE user_id = ?;", param=(session["user_id"],), result=True)
+    return render_template("tareas.html", skills=skills, projects=projects)
 
 # RUTA PRINCIPAL DE HABILIDADES 
 @app.route("/habilidades")
@@ -217,7 +220,7 @@ def guardar_proyecto():
     # Actualizar base de datos
     try:
         execute_db("INSERT INTO projects(name, link, user_id) VALUES (?, ?, ?);", param=(p_name, p_link, session["user_id"],))
-        flash("El proyecto se guardó con éxito","success", "danger")
+        flash("El proyecto se guardó con éxito","success")
     except Exception as error:
         flash("Ocurrió un error al guardar el proyecto", "danger")
         return redirect("/habilidades")

@@ -5,13 +5,51 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container " style="background-color: blue">
-       
+<div class="container my-5">
+    
+    <h2 class="letter-1 text-center mb-5"><i class="fa-solid fa-bullseye text-info me-3"></i>Tareas de Habilidades</h2>
+
+    <!-- tareas de habilidades -->
+    <div class="row g-4">
+        {% for skill in skills %}
+        <div class="col-md-4">
+            <div class="card card-p">
+                <div class="card-body">
+                    <h4 class="card-title letter-1 text-center"><i class="{{skill.icon}} text-info"></i> {{skill.name}}</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item task-item">20 minutos de teoria</li>
+                        <li class="list-group-item task-item">20 minutos de practica</li>
+                        <li class="list-group-item task-item">20 minutos de experimentacion</li>
+                    </ul>
+                    <button class="btn btn-outline-primary btn-p mt-2" type="submit">completar</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    <div class="container-fluid" style="background-color: yellow">
-        <p> div de prueba 2
-            asjdhasd
-            asdnasnd
-        </p>
+    
+
+    <h2 class="letter-1 text-center mt-5 mb-5"><i class="fa-solid fa-laptop-code text-info"></i> Tareas de Proyectos</h2>
+    
+    <!-- tareas de proyectos -->
+    <div class="row g-4">
+        {% for project in projects %}
+        <div class="col-md-4 ">
+            <div class="card card-p">
+                <div class="card-body">
+                    <h4 class="letter-1 text-center">{{project.name}}</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item task-item">terminar el 25% del proyecto</li>
+                        <li class="list-group-item task-item">terminar el 50% del proyecto</li>
+                        <li class="list-group-item task-item">terminar el 75% del proyecto</li>
+                        <li class="list-group-item task-item">terminar el 100% del proyecto</li>
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+        {% endfor %}
     </div>
+    
+</div>
 {% endblock %}
