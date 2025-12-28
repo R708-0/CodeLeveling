@@ -1,15 +1,33 @@
 // esperar a que el documento cargue completo
 document.addEventListener("DOMContentLoaded", () => {
+    const saveTask = JSON.parse(localStorage.getItem("completed_tasks")) || [];
+    
     // busca todos los elemento con clase task-item
-    document.querySelectorAll('.task-item').forEach(item => {
-        // evento al hacer click
-        item.addEventListener('click', () => {
-            // alterna añadir o quitar clase completed
-            item.classList.toggle('completed');
+    document.querySelectorAll('.task-item').forEach(task => {
+        const id = task.dataset.id; 
+        // si estaba marcado antes, se vuelve a marcar
+        if (saveTask.includes(id)){
+            task.classList.add("completed");
+        }
 
-            if (item.classList.contains('completed')){
-                fetch('')
+        // evento al hacer click
+        task.addEventListener('click', () => {
+            // alterna añadir o quitar clase completed
+            task.classList.toggle('completed');
+
+            let update = JSON.parse(localStorage.getItem("completed_tasks")) || [];
+            // añade ta tarea marcada a la lista 
+            if (task.classList.contains("completed")){
+                if (!update.includes(id)){
+                    update.push(id)
+                }
+            } 
+            else {
+                update = update.filter(t => t !== id);
             }
+            
+            //actualiza la lista de marcados
+            localStorage.setItem("completed_tasks", JSON.stringify(update));
         });
     });
 });

@@ -159,7 +159,7 @@ def perfil():
 @app.route("/tareas")
 @login_required
 def tareas():
-    skills = execute_db("SELECT s.name, s.icon FROM users_skills us JOIN skills s ON us.skill_id = s.id WHERE us.user_id = ?;", param=(session["user_id"],), result=True)
+    skills = execute_db("SELECT s.id, s.name, s.icon FROM users_skills us JOIN skills s ON us.skill_id = s.id WHERE us.user_id = ?;", param=(session["user_id"],), result=True)
     projects = execute_db("SELECT name FROM projects WHERE user_id = ?;", param=(session["user_id"],), result=True)
     return render_template("tareas.html", skills=skills, projects=projects)
 
