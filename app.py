@@ -117,7 +117,8 @@ def logout():
 def perfil():
     # Variables 
     skills = execute_db("SELECT s.icon, s.name, us.level FROM users_skills us JOIN skills s ON us.skill_id = s.id WHERE us.user_id = ?",param=(session["user_id"],),result=True)
-    projects = execute_db("SELECT name, link FROM projects WHERE user_id = ? ", param=(session["user_id"],),result=True)
+    projects = execute_db("""SELECT id, name, link FROM projects WHERE user_id = ? 
+    AND id IN (SELECT ref_id FROM completed_tasks WHERE user_id = ? AND type = 'project') """, param=(session["user_id"], session["user_id"]),result=True)
     rows = execute_db("SELECT * FROM users WHERE id = ?;", param=(session["user_id"],), result=True)
     user = rows[0]
 
@@ -155,21 +156,56 @@ def perfil():
     # Renderizar pagina    
     return render_template("perfil.html", skills=skills, user = user, titulo=titulo, rango =rango, projects=projects)
 
+# Eliminar proyectos
+@app.route("/eliminar_proyecto", methods=["POST"])
+@login_required
+def eliminar_proyecto():
+    project_id = request.form.get("project_id")
+    execute_db("DELETE FROM projects WHERE id = ? AND user_id = ?", param=(project_id, session["user_id"]))
+
+    return redirect("/")
+
+
+
 # RUTA PRINCIPAL DE TAREAS 
 @app.route("/tareas")
 @login_required
 def tareas():
-    skills = execute_db("SELECT s.id, s.name, s.icon FROM users_skills us JOIN skills s ON us.skill_id = s.id WHERE us.user_id = ?;", param=(session["user_id"],), result=True)
-    projects = execute_db("SELECT id, name FROM projects WHERE user_id = ?;", param=(session["user_id"],), result=True)
+    skills = execute_db("""SELECT s.id, s.name, s.icon FROM users_skills us
+     JOIN skills s ON us.skill_id = s.id WHERE us.user_id = ?
+     AND us.skill_id NOT IN (SELECT ref_id FROM completed_tasks 
+     WHERE user_id = ? AND type = 'skill');""", param=(session["user_id"], session["user_id"]), result=True)
+
+    projects = execute_db("""SELECT id, name FROM projects WHERE user_id = ?
+    AND id NOT IN (SELECT ref_id FROM completed_tasks
+    WHERE user_id = ? AND type = 'project');""", param=(session["user_id"], session["user_id"]), result=True)
+    
     return render_template("tareas.html", skills=skills, projects=projects)
 
 # Completar tareas
-@app.route("/tareas/completar" methods=["POST"])
+@app.route("/tareas/completar/skill", methods=["POST"])
 @login_required
-def completar():
+def completar_habilidad():
     ref_id = request.form.get("ref_id")
-    
+    execute_db("INSERT INTO completed_tasks (user_id, ref_id, type) Values (?, ?, 'skill')", param=(session["user_id"], ref_id))
 
+    return redirect("/tareas")
+
+# Completar proyecto
+@app.route("/tareas/completar/project", methods=["POST"])
+@login_required
+def completar_proyecto():
+    ref_id = request.form.get("ref_id")
+    execute_db("INSERT INTO completed_tasks (user_id, ref_id, type) VALUES (?, ? , 'project')", param=(session["user_id"],ref_id))
+
+    return redirect("/tareas")
+
+# Reiniciar tareas 
+@app.route("/tareas/reiniciar", methods=["POST"])
+@login_required
+def reiniciar():
+    execute_db("DELETE FROM completed_tasks WHERE  user_id = ?;", param=(session["user_id"],))
+    return redirect("/tareas")
 
 
 # RUTA PRINCIPAL DE HABILIDADES 
