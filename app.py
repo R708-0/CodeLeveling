@@ -155,13 +155,22 @@ def perfil():
     # Renderizar pagina    
     return render_template("perfil.html", skills=skills, user = user, titulo=titulo, rango =rango, projects=projects)
 
-# Ruta de tareas
+# RUTA PRINCIPAL DE TAREAS 
 @app.route("/tareas")
 @login_required
 def tareas():
     skills = execute_db("SELECT s.id, s.name, s.icon FROM users_skills us JOIN skills s ON us.skill_id = s.id WHERE us.user_id = ?;", param=(session["user_id"],), result=True)
-    projects = execute_db("SELECT name FROM projects WHERE user_id = ?;", param=(session["user_id"],), result=True)
+    projects = execute_db("SELECT id, name FROM projects WHERE user_id = ?;", param=(session["user_id"],), result=True)
     return render_template("tareas.html", skills=skills, projects=projects)
+
+# Completar tareas
+@app.route("/tareas/completar" methods=["POST"])
+@login_required
+def completar():
+    ref_id = request.form.get("ref_id")
+    
+
+
 
 # RUTA PRINCIPAL DE HABILIDADES 
 @app.route("/habilidades")

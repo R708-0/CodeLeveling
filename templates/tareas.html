@@ -17,11 +17,12 @@
                 <div class="card-body">
                     <h4 class="card-title letter-1 text-center"><i class="{{skill.icon}} text-info"></i> {{skill.name}}</h4>
                     <ul class="list-group">
+                        <input type="hidden" name="ref_id" value="{{skill.id}}">
                         <li class="list-group-item task-item" data-id="{{skill.id + 1000}}">20 minutos: teoria</li>
                         <li class="list-group-item task-item" data-id="{{skill.id + 2000}}">20 minutos: practica</li>
                         <li class="list-group-item task-item" data-id="{{skill.id + 3000}}">20 minutos: experimentacion</li>
                     </ul>
-                    <button class="btn btn-outline-primary btn-p mt-2" type="submit">completar</button>
+                    <button class="btn btn-outline-primary btn-p mt-2" type="submit" onclick="return ValidateTask(this)">completar</button>
                 </div>
             </div>
         </div>
@@ -34,21 +35,23 @@
     <!-- tareas de proyectos -->
     <div class="row g-4">
         {% for project in projects %}
-        <div class="col-md-4 ">
-            <div class="card card-p">
-                <div class="card-body">
-                    <h4 class="letter-1 text-center">{{project.name}}</h4>
-                    <ul class="list-group">
-                        <li class="list-group-item task-item">Avance : 25%</li>
-                        <li class="list-group-item task-item">Avance : 50%</li>
-                        <li class="list-group-item task-item">Avance : 75%</li>
-                        <li class="list-group-item task-item">Avance : 100%</li>
-                    </ul>
-                    <button class="btn btn-outline-primary btn-p mt-2" type="submit">completar</button>
-                </div>
+        <form action="/tareas/completar" method="POST">
+            <div class="col-md-4 ">
+                <div class="card card-p">
+                    <div class="card-body">
+                        <h4 class="letter-1 text-center">{{project.name}}</h4>
+                        <ul class="list-group">
+                            <input type="hidden" name="ref_id" value="{{project.id}}">
+                            <li class="list-group-item task-item" data-id="{{project.id + 10000}}">Avance : 25%</li>
+                            <li class="list-group-item task-item" data-id="{{project.id + 20000}}">Avance : 50%</li>
+                            <li class="list-group-item task-item" data-id="{{project.id + 30000}}">Avance : 75%</li>
+                            <li class="list-group-item task-item" data-id="{{project.id + 40000}}">Avance : 100%</li>
+                        </ul>
+                        <button class="btn btn-outline-primary btn-p mt-2" type="submit" onclick="return ValidateTask(this)">completar</button>
+                    </div>
+                </div>  
             </div>
-            
-        </div>
+        </form>
         {% endfor %}
     </div>
     

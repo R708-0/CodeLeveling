@@ -31,3 +31,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+// Funcion para validad que todas las tareas esten marcadas
+function ValidateTask(button) {
+    const card = button.closest(".card");
+    const task = card.querySelectorAll(".task-item");
+
+    let completed = 0;
+    task.forEach (t => {
+        if (t.classList.contains("completed")){
+            completed ++;
+        }
+    });
+
+    if (completed !== task.length) {
+        alert("Debes completar todas las tareas para continuar");
+        return false;
+    }
+
+    return true;
+
+}
