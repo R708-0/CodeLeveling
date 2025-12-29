@@ -37,6 +37,12 @@ Code Leveling
                 </div>
             </div>
 
+            <div class="progress mt-2">
+                <div class="progress-bar bg-info" role="progressbar" style="width: {{user.xp/user.xp_max*100 | round}}%" aria-valuenow="{{user.xp}}" aria-valuemin="0" aria-valuemax="{{user.xp_max}}">
+                    {{user.xp}} XP
+                </div>
+            </div>
+
             <!-- descripcion -->
             <p class="text-center mt-3 ">
                 {% if user.description %}
@@ -73,7 +79,7 @@ Code Leveling
 
             <h4 class="card-title text-center letter-1 mb-5"><i class="fa-solid fa-laptop-code"></i> Proyectos Creados</h4>
             
-            <!-- por cada proyecto (to-do) -->
+            <!-- Para cada proyecto -->
             
             <div class="row text-center">
                 {% for project in projects %}
@@ -96,11 +102,6 @@ Code Leveling
                 {% endfor %}
             </div>
 
-            <!-- boton compartir y editar -->
-            <div class="mt-4 d-flex justify-content-end gap-2">
-                <button class="btn btn-outline-primary btn-p"><i class="fas fa-share-alt me-2"></i>Compartir Perfil</button>
-                <button class="btn btn-outline-primary btn-p"><i class="fas fa-edit me-2"></i>Editar Perfil</button>
-            </div>
         </div>
     </div>
 </div>

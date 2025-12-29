@@ -52,3 +52,9 @@ function ValidateTask(button) {
     return true;
 
 }
+
+// Funcion limpiar tareas marcadas
+function ClearTask(){
+    localStorage.removeItem("completed_tasks");
+    document.getElementById("resetForm").submit();
+}

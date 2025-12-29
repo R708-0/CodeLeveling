@@ -4,7 +4,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask_session import Session
 
 from helpers import login_required
-from helpers import execute_db
+from helpers import execute_db, up_xp_skill, up_xp_user
 
 app = Flask(__name__)
 
@@ -189,6 +189,8 @@ def completar_habilidad():
     ref_id = request.form.get("ref_id")
     execute_db("INSERT INTO completed_tasks (user_id, ref_id, type) Values (?, ?, 'skill')", param=(session["user_id"], ref_id))
 
+    up_xp_skill(session["user_id"], ref_id, 10)
+
     return redirect("/tareas")
 
 # Completar proyecto
@@ -196,7 +198,12 @@ def completar_habilidad():
 @login_required
 def completar_proyecto():
     ref_id = request.form.get("ref_id")
+    row = execute_db("SELECT time FROM projects WHERE user_id = ? AND id = ?", param=(session["user_id"], ref_id), result=True)
+    p_time = row[0]["time"]    
+
     execute_db("INSERT INTO completed_tasks (user_id, ref_id, type) VALUES (?, ? , 'project')", param=(session["user_id"],ref_id))
+
+    up_xp_user(session["user_id"], p_time)
 
     return redirect("/tareas")
 
@@ -204,7 +211,7 @@ def completar_proyecto():
 @app.route("/tareas/reiniciar", methods=["POST"])
 @login_required
 def reiniciar():
-    execute_db("DELETE FROM completed_tasks WHERE  user_id = ?;", param=(session["user_id"],))
+    execute_db("DELETE FROM completed_tasks WHERE  user_id = ? AND type = 'skill';", param=(session["user_id"],))
     return redirect("/tareas")
 
 
@@ -247,6 +254,7 @@ def aprender_habilidad():
 def guardar_proyecto():
     p_name = request.form.get("pj_name")
     p_link = request.form.get("pj_link")
+    p_time = request.form.get("pj_time")
    
     # Validacion de inputs
     if not p_name:
@@ -264,7 +272,7 @@ def guardar_proyecto():
 
     # Actualizar base de datos
     try:
-        execute_db("INSERT INTO projects(name, link, user_id) VALUES (?, ?, ?);", param=(p_name, p_link, session["user_id"],))
+        execute_db("INSERT INTO projects(name, link, user_id, time) VALUES (?, ?, ?,?);", param=(p_name, p_link, session["user_id"],p_time))
         flash("El proyecto se guardó con éxito","success")
     except Exception as error:
         flash("Ocurrió un error al guardar el proyecto", "danger")

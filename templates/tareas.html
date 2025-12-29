@@ -10,7 +10,7 @@
     <h2 class="letter-1 text-center mb-3"><i class="fa-solid fa-bullseye text-info me-3"></i>Tareas de Habilidades</h2>
     <div class="d-flex justify-content-center mb-5">
         <form action="/tareas/reiniciar" method="POST">
-            <button class="btn btn-outline-primary btn-p" type="submit">Reiniciar Tareas</button>
+            <button class="btn btn-outline-primary btn-p" type="submit" onclick="ClearTask()">Reiniciar Tareas</button>
         </form>
     </div>
     <!-- tareas de habilidades -->
@@ -27,7 +27,7 @@
                     </ul>
                     <form action="/tareas/completar/skill" method="POST">
                         <input type="hidden" name="ref_id" value="{{skill.id}}">
-                        <button class="btn btn-outline-primary btn-p mt-2" type="submit" onclick="return ValidateTask(this)">completar</button>
+                        <button class="btn btn-outline-primary btn-p mt-2" type="submit" onclick="return ValidateTask(this)" >completar</button>
                     </form>  
                 </div>
             </div>
