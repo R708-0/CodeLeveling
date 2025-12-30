@@ -21,9 +21,9 @@
                 <div class="card-body">
                     <h4 class="card-title letter-1 text-center"><i class="{{skill.icon}} text-info"></i> {{skill.name}}</h4>
                     <ul class="list-group">
-                        <li class="list-group-item task-item" data-id="{{skill.id + 1000}}">20 minutos: teoria</li>
-                        <li class="list-group-item task-item" data-id="{{skill.id + 2000}}">20 minutos: practica</li>
-                        <li class="list-group-item task-item" data-id="{{skill.id + 3000}}">20 minutos: experimentacion</li>
+                        <li class="list-group-item task-item" data-id="{{skill.id + 1000}}">20 minutos: teoría</li>
+                        <li class="list-group-item task-item" data-id="{{skill.id + 2000}}">20 minutos: práctica</li>
+                        <li class="list-group-item task-item" data-id="{{skill.id + 3000}}">20 minutos: experimentación</li>
                     </ul>
                     <form action="/tareas/completar/skill" method="POST">
                         <input type="hidden" name="ref_id" value="{{skill.id}}">
@@ -46,10 +46,10 @@
                     <div class="card-body">
                         <h4 class="letter-1 text-center">{{project.name}}</h4>
                         <ul class="list-group">                            
-                            <li class="list-group-item task-item" data-id="{{project.id + 10000}}">Avance : 25%</li>
-                            <li class="list-group-item task-item" data-id="{{project.id + 20000}}">Avance : 50%</li>
-                            <li class="list-group-item task-item" data-id="{{project.id + 30000}}">Avance : 75%</li>
-                            <li class="list-group-item task-item" data-id="{{project.id + 40000}}">Avance : 100%</li>
+                            <li class="list-group-item task-item" data-id="{{project.id + 10000}}">Fase 1 completada : 25%</li>
+                            <li class="list-group-item task-item" data-id="{{project.id + 20000}}">Fase 2 completada : 50%</li>
+                            <li class="list-group-item task-item" data-id="{{project.id + 30000}}">Fase 3 completada : 75%</li>
+                            <li class="list-group-item task-item" data-id="{{project.id + 40000}}">Fase 4 completada : 100%</li>
                         </ul>
                         <form action="/tareas/completar/project" method="POST">
                             <input type="hidden" name="ref_id" value="{{project.id}}">
