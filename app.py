@@ -161,10 +161,10 @@ def perfil():
 @login_required
 def eliminar_proyecto():
     project_id = request.form.get("project_id")
+  
     execute_db("DELETE FROM projects WHERE id = ? AND user_id = ?", param=(project_id, session["user_id"]))
 
     return redirect("/")
-
 
 
 # RUTA PRINCIPAL DE TAREAS 

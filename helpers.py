@@ -47,6 +47,8 @@ def up_xp_skill(user_id, skill_id, xp_sum=10):
         xp = xp - xp_max
         xp_max = xp_max + (100 * lvl)
 
+        up_xp_user(user_id,1)
+
         execute_db("UPDATE users_skills SET level = ?, xp = ?, xp_max = ? WHERE user_id = ? AND skill_id = ?", param=(lvl, xp, xp_max, user_id, skill_id))
 
     execute_db("UPDATE users_skills SET  xp = ? WHERE user_id = ? AND skill_id = ?;", param=(xp, user_id, skill_id))
@@ -58,6 +60,7 @@ def up_xp_user(user_id, p_time=1):
     xp = user[0]["xp"] + xp_sum 
     lvl = user[0]["level"]
     xp_max = user[0]["xp_max"]
+    xp_actual = user[0]["xp"]
 
     if xp >= xp_max:
         lvl += 1
@@ -65,5 +68,6 @@ def up_xp_user(user_id, p_time=1):
         xp_max = xp_max + (100 * lvl)
 
         execute_db("UPDATE users SET level = ?, xp = ?, xp_max = ? WHERE id = ?", param=(lvl, xp, xp_max, user_id))
+
 
     execute_db("UPDATE users SET xp = ? WHERE id = ?",param=(xp, user_id))  
