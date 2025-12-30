@@ -30,6 +30,7 @@ def execute_db(query, param=(),result = False):
     return rows
 
 # VERIFICAR EXTENSIONES DE ARCHIVOS VALIDOS
+ALLOWED_EXTENSIONS = {"png","jpg","jpeg","gif"}
 def allowed_files(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
